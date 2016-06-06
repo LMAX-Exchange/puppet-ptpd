@@ -1,0 +1,14 @@
+{
+  "name": "lmaxexchange-ptpd",
+  "version": "0.1.0",
+  "author": "LMAX-Exchange",
+  "summary": "Manages the Precision Time Procotol software, ptpd.",
+  "license": "Apache 2.0",
+  "source": "https://github.com/LMAX-Exchange/puppet-ptpd",
+  "project_page": "https://github.com/LMAX-Exchange/puppet-ptpd",
+  "issues_url": "https://github.com/LMAX-Exchange/puppet-ptpd/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ]
+}
+
