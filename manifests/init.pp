@@ -1,41 +1,45 @@
-# == Class: ptpd
-#
-# Full description of class ptpd here.
-#
-# === Parameters
-#
-# Document parameters here.
-#
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
-#
-# === Variables
-#
-# Here you should define a list of variables that this module would require.
-#
-# [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if
-#   it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should be avoided in favor of class parameters as
-#   of Puppet 2.6.)
-#
-# === Examples
-#
-#  class { 'ptpd':
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
-#  }
-#
-# === Authors
-#
-# Author Name <author@domain.com>
-#
-# === Copyright
-#
-# Copyright 2016 Your name here, unless otherwise noted.
-#
-class ptpd {
+# Class: ptpd, see README.md for documentation
+class ptpd(
+  $ptpengine_interface,
+  $ptpengine_domain                = 0,
+  $ptpengine_hardware_timestamping = 'y',
+  $ptpengine_delay_mechanism       = 'E2E',
+  $ptpengine_ip_mode               = 'hybrid',
+  $global_log_file                 = '/var/log/ptpd.log',
+  $global_statistics_file          = '/var/log/ptpd.stats',
+  $package_name                    = 'ptpd-linuxphc',
+) {
+  validate_string($ptpengine_interface)
+  validate_integer($ptpengine_domain)
+  $ptpengine_hardware_timestamping_bool = str2bool($ptpengine_hardware_timestamping)
+  validate_bool($ptpengine_hardware_timestamping_bool)
+  if ! ($ptpengine_delay_mechanism in [ 'E2E', 'P2P' ]) {
+    fail("Parameter 'ptpengine_delay_mechanism' must be on of 'E2E' or 'P2P'")
+  }
+  if ! ($ptpengine_ip_mode in ['hybrid','unicast']) {
+     fail("Parameter 'ptpengine_ip_mode' must be one of 'hybrid' or 'unicast'")
+  }
+  validate_absolute_path($global_log_file)
+  validate_absolute_path($global_statistics_file)
+  validate_string($package_name)
 
+  package { $package_name:
+    ensure => present,
+  }
 
+  file { '/etc/ptpd.conf':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    content => template("${module_name}/ptpd.conf.erb"),
+  }
+
+  service { 'ptpd':
+    ensure     => running,
+    enable     => true,
+    hasstatus  => true,
+    hasrestart => true,
+  }
+
+  #TODO logrotate
 }

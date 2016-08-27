@@ -15,41 +15,40 @@
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+Manages the Precision Time Protocol (PTP) version 2 software, PTPd.
+
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
+This Puppet class is expected to work with ptpd version 2.3.2 with Linux PHC support, or later.
+At the time of writing this was not merged into mainline, nor where there packages for it.
 
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+So, you need to build your own from source, which can be found here:
+
+https://github.com/wowczarek/ptpd/tree/wowczarek-2.3.2-hwtest
 
 ## Setup
 
 ### What ptpd affects
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
+This module will manage the configuration files for ptpd, namely /etc/ptpd.conf, along with the
+associated service. It will also install a ptpd package, which defaults to 'ptpd-linuxphc', which
+is the name of the package that's built from the source tree above. Note that this will be quite
+different to any older ptpd daemons in some distributions.
 
 ### Beginning with ptpd
 
-The very basic steps needed for a user to get the module up and running.
+Resource-like syntax is probably the better option, as you will need to configure the module:
 
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you may wish to include an additional section here: Upgrading
-(For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+~~~ puppet
+class { 'ptpd:' }
+~~~
+
+or if all your parameters are in Hiera:
+
+~~~ puppet
+include ptpd
+~~~
 
 ## Usage
 
@@ -58,22 +57,25 @@ the fancy stuff with your module here.
 
 ## Reference
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+### Classes
+
+#### Public Classes
+
+* `ptpd`: Class that installs and configures ptpd.
+
+### Parameters
+
+#### ptpd
+
+##### `package_name`
+
+Specify your own package name.
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+The module is tested against CentOS 6. It should work in most other flavours, and I'm
+happy to accept pull requests for other distros.
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
-
-## Release Notes/Contributors/Etc **Optional**
-
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You may also add any additional sections you feel are
-necessary or important to include here. Please use the `## ` header.
+We will accept pull requests from GitHub.

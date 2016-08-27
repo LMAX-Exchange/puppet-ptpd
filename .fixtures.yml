@@ -1,0 +1,5 @@
+fixtures:
+  repositories:
+    stdlib: 'https://git.yb.lmax/techops-puppet-3rd-party/puppetlabs-stdlib.git'
+  symlinks:
+    ptpd: "#{source_dir}"
