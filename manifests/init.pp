@@ -27,11 +27,13 @@ class ptpd(
     ensure => present,
   }
 
-  file { '/etc/ptpd.conf':
+  $conf_file = '/etc/ptpd.conf'
+  file { $conf_file:
     ensure  => file,
     owner   => 'root',
     group   => 'root',
     content => template("${module_name}/ptpd.conf.erb"),
+    require    => Package[$package_name],
   }
 
   service { 'ptpd':
@@ -39,6 +41,7 @@ class ptpd(
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
+    require    => File[$conf_file],
   }
 
   #TODO logrotate
