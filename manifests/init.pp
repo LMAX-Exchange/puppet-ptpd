@@ -9,6 +9,7 @@ class ptpd(
   $global_log_file                 = '/var/log/ptpd.log',
   $global_statistics_file          = '/var/log/ptpd.stats',
   $package_name                    = 'ptpd-linuxphc',
+  $service_name                    = 'ptpd',
 ) {
   validate_string($ptpengine_interface)
   validate_integer($ptpengine_domain)
@@ -37,7 +38,8 @@ class ptpd(
     owner   => 'root',
     group   => 'root',
     content => template("${module_name}/ptpd.conf.erb"),
-    require    => Package[$package_name],
+    require => Package[$package_name],
+    notify  => Service[$service_name],
   }
 
   $sysconf_file = '/etc/sysconfig/ptpd'
@@ -47,9 +49,10 @@ class ptpd(
     group   => 'root',
     content => template("${module_name}/ptpd_sysconfig.erb"),
     require => Package[$package_name],
+    notify  => Service[$service_name],
   }
 
-  service { 'ptpd':
+  service { $service_name:
     ensure     => running,
     enable     => true,
     hasstatus  => true,
