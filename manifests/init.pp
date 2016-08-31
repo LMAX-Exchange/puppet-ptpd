@@ -2,6 +2,7 @@
 class ptpd(
   $ptpengine_interface,
   $ptpengine_domain                = 0,
+  $ptpengine_preset                = 'slaveonly',
   $ptpengine_hardware_timestamping = 'y',
   $ptpengine_delay_mechanism       = 'E2E',
   $ptpengine_ip_mode               = 'hybrid',
@@ -19,6 +20,9 @@ class ptpd(
   if ! ($ptpengine_ip_mode in ['hybrid','unicast']) {
      fail("Parameter 'ptpengine_ip_mode' must be one of 'hybrid' or 'unicast'")
   }
+  if ! ($ptpengine_preset in ['slaveonly','masterslave','masteronly']) {
+    fail("Parameter 'ptpengine_preset' must be one of 'slaveonly', 'masterslave' or 'masteronly'")
+  }
   validate_absolute_path($global_log_file)
   validate_absolute_path($global_statistics_file)
   validate_string($package_name)
@@ -34,6 +38,15 @@ class ptpd(
     group   => 'root',
     content => template("${module_name}/ptpd.conf.erb"),
     require    => Package[$package_name],
+  }
+
+  $sysconf_file = '/etc/sysconfig/ptpd'
+  file { $sysconf_file:
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    content => template("${module_name}/ptpd_sysconfig.erb"),
+    require => Package[$package_name],
   }
 
   service { 'ptpd':

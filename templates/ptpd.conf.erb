@@ -17,7 +17,7 @@ ptpengine:hardware_timestamping=n
 
 ; #### BEGIN Basic PTP settings
 
-ptpengine:presetslave
+ptpengine:preset=<%= @ptpengine_preset %>
 ptpengine:priority1=200
 ptpengine:delay_mechanism=<%= @ptpengine_delay_mechanism %>
 
