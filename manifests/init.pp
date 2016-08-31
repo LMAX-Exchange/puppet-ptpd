@@ -8,6 +8,8 @@ class ptpd(
   $ptpengine_ip_mode               = 'hybrid',
   $global_log_file                 = '/var/log/ptpd.log',
   $global_statistics_file          = '/var/log/ptpd.stats',
+  $global_lock_file                = '/var/run/ptpd.lock',
+  $global_status_file              = '/var/run/ptpd.status',
   $package_name                    = 'ptpd-linuxphc',
   $service_name                    = 'ptpd',
 ) {
