@@ -15,7 +15,11 @@ class ptpd(
   $service_ensure                  = 'running',
   $service_enable                  = true,
 ) {
-  validate_string($ptpengine_interface)
+  #FIXME there's certain bits of validation we don't want to bother doing
+  #if we don't actually plan on running PTPd (turning it off)
+  if ($service_ensure == 'running') {
+    validate_string($ptpengine_interface)
+  }
   validate_integer($ptpengine_domain)
   $ptpengine_hardware_timestamping_bool = str2bool($ptpengine_hardware_timestamping)
   validate_bool($ptpengine_hardware_timestamping_bool)
