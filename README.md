@@ -50,11 +50,6 @@ or if all your parameters are in Hiera:
 include ptpd
 ~~~
 
-## Usage
-
-Put the classes, types, and resources for customizing, configuring, and doing
-the fancy stuff with your module here.
-
 ## Reference
 
 ### Classes
@@ -67,9 +62,28 @@ the fancy stuff with your module here.
 
 #### ptpd
 
+##### `ptpengine_interface`
+
+The interface to listen to PTP on. Must be specified.
+
+##### `ptpengine_domain`
+
+PTP domain number. Usually zero, allows you to run multple 
+
+##### `ptpengine_preset`
+##### `ptpengine_hardware_timestamping`
+##### `ptpengine_delay_mechanism`
+##### `ptpengine_ip_mode`
+##### `global_log_file`
+##### `global_statistics_file`
+##### `global_lock_file`
+##### `global_status_file`
+
 ##### `package_name`
 
 Specify your own package name.
+
+##### `service_name                    = 'ptpd',
 
 ## Limitations
 
