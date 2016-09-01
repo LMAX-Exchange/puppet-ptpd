@@ -12,6 +12,8 @@ class ptpd(
   $global_status_file              = '/var/run/ptpd.status',
   $package_name                    = 'ptpd-linuxphc',
   $service_name                    = 'ptpd',
+  $service_ensure                  = 'running',
+  $service_enable                  = true,
 ) {
   validate_string($ptpengine_interface)
   validate_integer($ptpengine_domain)
@@ -55,8 +57,8 @@ class ptpd(
   }
 
   service { $service_name:
-    ensure     => running,
-    enable     => true,
+    ensure     => $service_ensure,
+    enable     => $service_enable,
     hasstatus  => true,
     hasrestart => true,
     require    => File[$conf_file],
