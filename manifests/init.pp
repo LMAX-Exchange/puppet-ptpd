@@ -1,6 +1,6 @@
 # Class: ptpd, see README.md for documentation
 class ptpd(
-  $ptpengine_interface,
+  $ptpengine_interface             = undef,
   $ptpengine_domain                = 0,
   $ptpengine_preset                = 'slaveonly',
   $ptpengine_hardware_timestamping = 'y',
@@ -17,8 +17,8 @@ class ptpd(
 ) {
   #FIXME there's certain bits of validation we don't want to bother doing
   #if we don't actually plan on running PTPd (turning it off)
-  if ($service_ensure == 'running') {
-    validate_string($ptpengine_interface)
+  if ($service_ensure == 'running' and $ptpengine_interface == undef) {
+    fail("Must specify parameter 'ptpengine_interface' when ptpd service is configured to run")
   }
   validate_integer($ptpengine_domain)
   $ptpengine_hardware_timestamping_bool = str2bool($ptpengine_hardware_timestamping)
