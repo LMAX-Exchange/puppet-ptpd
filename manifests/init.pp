@@ -3,7 +3,7 @@ class ptpd(
   $ptpengine_interface             = undef,
   $ptpengine_domain                = 0,
   $ptpengine_preset                = 'slaveonly',
-  $ptpengine_hardware_timestamping = 'y',
+  $ptpengine_hardware_timestamping = true,
   $ptpengine_delay_mechanism       = 'E2E',
   $ptpengine_ip_mode               = 'hybrid',
   $global_log_file                 = '/var/log/ptpd.log',
@@ -27,8 +27,8 @@ class ptpd(
   if ! ($ptpengine_delay_mechanism in [ 'E2E', 'P2P' ]) {
     fail("Parameter 'ptpengine_delay_mechanism' must be on of 'E2E' or 'P2P'")
   }
-  if ! ($ptpengine_ip_mode in ['hybrid','unicast']) {
-    fail("Parameter 'ptpengine_ip_mode' must be one of 'hybrid' or 'unicast'")
+  if ! ($ptpengine_ip_mode in ['multicast','hybrid','unicast']) {
+    fail("Parameter 'ptpengine_ip_mode' must be one of 'multicast', 'hybrid' or 'unicast'")
   }
   if ! ($ptpengine_preset in ['slaveonly','masterslave','masteronly']) {
     fail("Parameter 'ptpengine_preset' must be one of 'slaveonly', 'masterslave' or 'masteronly'")
