@@ -1,5 +1,8 @@
 require 'spec_helper'
 describe 'ptpd' do
+  let (:facts) {{
+    :osfamily => 'RedHat',
+  }}
 
   context 'with defaults for all parameters' do
     let (:params) {{
