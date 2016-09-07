@@ -1,5 +1,6 @@
 fixtures:
   repositories:
-    stdlib: 'https://git.yb.lmax/techops-puppet-3rd-party/puppetlabs-stdlib.git'
+    stdlib: 'https://github.com/puppetlabs/puppetlabs-stdlib.git'
+    logrotate: 'https://github.com/rodjek/puppet-logrotate.git'
   symlinks:
     ptpd: "#{source_dir}"
