@@ -62,6 +62,7 @@ If you've built ptpd with a different package name:
 class { 'ptpd:'
   package_name => 'my-ptpd',
 }
+~~~
 
 ## Reference
 
