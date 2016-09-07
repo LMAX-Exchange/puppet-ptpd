@@ -5,8 +5,8 @@
 #### Table of Contents
 
 1. [Overview](#overview)
-2. [Module Description - What the module does and why it is useful](#module-description)
-3. [Setup - The basics of getting started with ptpd](#setup)
+2. [Module Description](#module-description)
+3. [Setup](#setup)
     * [Requirements](#what-ptpd-affects)
     * [Beginning with ptpd](#beginning-with-ptpd)
 4. [Usage](#usage)
@@ -21,7 +21,7 @@ Manages the Precision Time Protocol (PTP) version 2 software, PTPd.
 
 ## Module Description
 
-This module will manage the configuration files for ptpd (v2.3.2 or later), namely /etc/ptpd.conf, along with the
+This module will manage the configuration files for ptpd, namely /etc/ptpd.conf, along with the
 associated service.
 
 This module is designed for ptpd version 2.3.2 or later, specifically with Linux PHC support built in.
