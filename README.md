@@ -7,13 +7,12 @@
 1. [Overview](#overview)
 2. [Module Description - What the module does and why it is useful](#module-description)
 3. [Setup - The basics of getting started with ptpd](#setup)
-    * [What ptpd affects](#what-ptpd-affects)
-    * [Setup requirements](#setup-requirements)
+    * [Requirements](#what-ptpd-affects)
     * [Beginning with ptpd](#beginning-with-ptpd)
-4. [Usage - Configuration options and additional functionality](#usage)
-5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
+4. [Usage](#usage)
+5. [Reference](#reference)
+5. [Limitations](#limitations)
+6. [Development](#development)
 
 ## Overview
 
@@ -22,6 +21,18 @@ Manages the Precision Time Protocol (PTP) version 2 software, PTPd.
 
 ## Module Description
 
+This module will manage the configuration files for ptpd (v2.3.2 or later), namely /etc/ptpd.conf, along with the
+associated service.
+
+This module is designed for ptpd version 2.3.2 or later, specifically with Linux PHC support built in.
+
+Don't try and use this module to manage older versions of PTPd, such as those
+found in RHEL 6 - there are significant changes the recent releases which means it probably won't work.
+
+## Setup
+
+### Requirements
+
 This Puppet class is expected to work with ptpd version 2.3.2 with Linux PHC support, or later.
 At the time of writing this was not merged into mainline, nor where there packages for it.
 
@@ -29,14 +40,7 @@ So, you need to build your own from source, which can be found here:
 
 https://github.com/wowczarek/ptpd/tree/wowczarek-2.3.2-hwtest
 
-## Setup
-
-### What ptpd affects
-
-This module will manage the configuration files for ptpd, namely /etc/ptpd.conf, along with the
-associated service. It will also install a ptpd package, which defaults to 'ptpd-linuxphc', which
-is the name of the package that's built from the source tree above. Note that this will be quite
-different to any older ptpd daemons in some distributions.
+This module depends on [b4ldr-logrotate](https://github.com/b4ldr/puppet-logrotate) for log rotation, but this can be disabled.
 
 ### Beginning with ptpd
 
@@ -46,11 +50,18 @@ Resource-like syntax is probably the better option, as you will need to configur
 class { 'ptpd:' }
 ~~~
 
-or if all your parameters are in Hiera:
+Or if all your parameters are in Hiera:
 
 ~~~ puppet
 include ptpd
 ~~~
+
+If you've built ptpd with a different package name:
+
+~~~ puppet
+class { 'ptpd:'
+  package_name => 'my-ptpd',
+}
 
 ## Reference
 
@@ -70,22 +81,87 @@ The interface to listen to PTP on. Must be specified.
 
 ##### `ptpengine_domain`
 
-PTP domain number. Usually zero, allows you to run multple 
+PTP domain number. Usually zero, allows you to run multiple PTP streams on the same network and only listen to one of them.
+
+Defaults to `0`.
 
 ##### `ptpengine_preset`
+
+Either `slaveonly`, `masterslave`, or `masteronly`. Useful for making PTPd only ever be a slave, for example.
+
+Defaults to `slaveonly`.
+
 ##### `ptpengine_hardware_timestamping`
+
+Defaults to `true`.
+
 ##### `ptpengine_delay_mechanism`
+
+Either `E2E` or `P2P`. Whether to use End to End or Peer to Peer delay detection. P2P only works when every device in
+the network between master and slave is "PTP aware".
+
+Defaults to `E2E`.
+
 ##### `ptpengine_ip_mode`
+
+IP transmission mode, must be one of `multicast`, `hybrid`, or `unicast`. Hybrid mode is the "Enterprise" profile where
+Sync and Announce messages are multicast from the master, but delay requests and responses are unicast from the slaves.
+
+Defaults to `hybrid`.
+
 ##### `global_log_file`
+
+Location of the daemon log file.
+
+Defaults to `/var/log/ptpd.log`.
+
 ##### `global_statistics_file`
+
+Location of the statistics file.
+
+Defaults to `/var/log/ptpd.stats`.
+
 ##### `global_lock_file`
+
+Location of the daemon lock / PID file.
+
+Defaults to `/var/run/ptpd.lock`.
+
 ##### `global_status_file`
+
+Location of the daemon status file.
+
+Defaults to `/var/run/ptpd.status`.
 
 ##### `package_name`
 
 Specify your own package name.
 
-##### `service_name                    = 'ptpd',
+Defaults to `ptpd-linuxphc`.
+
+##### `service_name`
+
+The name of the PTPd service.
+
+Defaults to `ptpd`.
+
+##### `service_ensure`
+
+The state of the PTPd service.
+
+Defaults to `running`.
+
+##### `service_enable`
+
+Controls whether the PTPd service starts on boot or not.
+
+Defaults to `true`.
+
+##### `manage_logrotate`
+
+Manages a logrotate rule for the PTPd log and statistics files. This uses the [b4ldr-logrotate](https://github.com/b4ldr/puppet-logrotate) module.
+
+Defaults to `true`.
 
 ## Limitations
 
