@@ -1,5 +1,7 @@
 # ptpd
 
+[![Build Status](https://travis-ci.org/LMAX-Exchange/puppet-ptpd.svg?branch=master)](https://travis-ci.org/LMAX-Exchange/puppet-ptpd)
+
 #### Table of Contents
 
 1. [Overview](#overview)
