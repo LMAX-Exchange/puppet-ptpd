@@ -22,10 +22,6 @@ describe 'ptpd' do
       'group'  => 'root',
     }) }
 
-    it "should have a running ptpd service" do
-      expect { should contain_service('ptpd').with_ensure('running') }
-    end
-
     it { is_expected.to contain_logrotate__rule('ptpd') }
   end
 
