@@ -21,6 +21,8 @@ describe 'ptpd' do
       'owner'  => 'root',
       'group'  => 'root',
     }) }
+
+    it { is_expected.to contain_logrotate__rule('ptpd') }
   end
 
   context 'with a custom package name' do
@@ -30,5 +32,16 @@ describe 'ptpd' do
     }}
 
     it { is_expected.to contain_package('some-ptpd') }
+  end
+
+  context 'with manage_logrotate=false' do
+    let(:params) {{
+      :ptpengine_interface => 'eth0',
+      :manage_logrotate => false,
+    }}
+
+    it "should not contain a logrotate rule" do
+      expect { should_not contain_logrotate__rule('ptpd') }
+    end
   end
 end
