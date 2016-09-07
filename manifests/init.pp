@@ -77,7 +77,7 @@ class ptpd(
       copytruncate  => true,
       missingok     => true,
       rotate_every  => 'day',
-      rotate        => 7,
+      rotate        => '7',
       postrotate    => "/bin/kill -HUP $(cat ${global_lock_file} 2>/dev/null) 2> /dev/null || true",
     }
   }
