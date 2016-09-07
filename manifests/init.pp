@@ -28,7 +28,7 @@ class ptpd(
     fail("Parameter 'ptpengine_delay_mechanism' must be on of 'E2E' or 'P2P'")
   }
   if ! ($ptpengine_ip_mode in ['hybrid','unicast']) {
-     fail("Parameter 'ptpengine_ip_mode' must be one of 'hybrid' or 'unicast'")
+    fail("Parameter 'ptpengine_ip_mode' must be one of 'hybrid' or 'unicast'")
   }
   if ! ($ptpengine_preset in ['slaveonly','masterslave','masteronly']) {
     fail("Parameter 'ptpengine_preset' must be one of 'slaveonly', 'masterslave' or 'masteronly'")
@@ -71,7 +71,7 @@ class ptpd(
 
   if ($manage_logrotate) {
     logrotate::rule { 'ptpd':
-      path          => "$global_log_file $global_statistics_file",
+      path          => "${global_log_file} ${global_statistics_file}",
       compress      => true,
       delaycompress => true,
       copytruncate  => true,
