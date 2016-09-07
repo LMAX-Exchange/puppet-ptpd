@@ -22,6 +22,10 @@ describe 'ptpd' do
       'group'  => 'root',
     }) }
 
+    it "should have a running ptpd service" do
+      expect { should contain_service('ptpd').with_ensure('running') }
+    end
+
     it { is_expected.to contain_logrotate__rule('ptpd') }
   end
 
@@ -42,6 +46,17 @@ describe 'ptpd' do
 
     it "should not contain a logrotate rule" do
       expect { should_not contain_logrotate__rule('ptpd') }
+    end
+  end
+
+  context 'with service_ensure=stopped' do
+    let(:params) {{
+      :ptpengine_interface => 'eth0',
+      :service_ensure => 'stopped',
+    }}
+
+    it "should not have a running ptpd service" do
+      expect { should contain_service('ptpd').with_ensure('stopped') }
     end
   end
 end
