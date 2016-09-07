@@ -14,6 +14,7 @@ class ptpd(
   $service_name                    = 'ptpd',
   $service_ensure                  = 'running',
   $service_enable                  = true,
+  $manage_logrotate                = true,
 ) {
   #FIXME there's certain bits of validation we don't want to bother doing
   #if we don't actually plan on running PTPd (turning it off)
@@ -68,5 +69,16 @@ class ptpd(
     require    => File[$conf_file],
   }
 
-  #TODO logrotate
+  if ($manage_logrotate) {
+    logrotate::rule { 'ptpd':
+      path          => "$global_log_file $global_statistics_file",
+      compress      => true,
+      delaycompress => true,
+      copytruncate  => true,
+      missingok     => true,
+      rotate_every  => 'day',
+      rotate        => 7,
+      postrotate    => "/bin/kill -HUP $(cat ${global_lock_file} 2>/dev/null) 2> /dev/null || true",
+    }
+  }
 }
