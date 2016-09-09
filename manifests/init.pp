@@ -7,6 +7,7 @@ class ptpd(
   $ptpengine_delay_mechanism       = 'E2E',
   $ptpengine_ip_mode               = 'hybrid',
   $global_log_file                 = '/var/log/ptpd.log',
+  $log_statistics                  = true,
   $global_statistics_file          = '/var/log/ptpd.stats',
   $global_lock_file                = '/var/run/ptpd.lock',
   $global_status_file              = '/var/run/ptpd.status',
@@ -24,6 +25,8 @@ class ptpd(
   validate_integer($ptpengine_domain)
   $ptpengine_hardware_timestamping_bool = str2bool($ptpengine_hardware_timestamping)
   validate_bool($ptpengine_hardware_timestamping_bool)
+  $log_statistics_bool = str2bool($log_statistics)
+  validate_bool($log_statistics_bool)
   if ! ($ptpengine_delay_mechanism in [ 'E2E', 'P2P' ]) {
     fail("Parameter 'ptpengine_delay_mechanism' must be on of 'E2E' or 'P2P'")
   }

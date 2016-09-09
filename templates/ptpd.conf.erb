@@ -112,7 +112,11 @@ clock:frequency_directory = /etc
 global:log_file=<%= @global_log_file %>
 
 ; stats log
+<% if @log_statistics_bool -%>
 global:statistics_file=<%= @global_statistics_file %>
+<% else -%>
+global:statistics_file=
+<% end -%>
 
 ; PI servo parameters (gains)
 ; NOTE: If the system clock is steered by a hardware clock,

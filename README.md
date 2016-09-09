@@ -116,6 +116,13 @@ Location of the daemon log file.
 
 Defaults to `/var/log/ptpd.log`.
 
+##### `log_statistics`
+
+Whether to log statistics to disk or not (can take a lot of space when fast Sync intervals are used). The location
+of the statistics file is controlled by the `global_statistics_file` parameter.
+
+Defaults to `true`.
+
 ##### `global_statistics_file`
 
 Location of the statistics file.
