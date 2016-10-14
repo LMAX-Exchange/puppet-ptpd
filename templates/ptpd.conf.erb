@@ -124,13 +124,15 @@ global:statistics_file=
 
 ; software clock (system clock) control
 ; if the system clock is being steered by PTP directly
-; (s/w timestamping), use the low values:
+; (s/w timestamping), use the low values, eg:
 ; servo:kp=0.1
 ; servo:ki=0.001
 ; If the system clock is being steered by a hardware
-; PTP clock, use the high values.
-servo:kp=0.7
-servo:ki=0.3
+; PTP clock, use the high values, eg:
+; servo:kp=0.7
+; servo:ki=0.3
+servo:kp=<%= @real_servo_kp %>
+servo:ki=<%= @real_servo_ki %>
 ; hardware clock control
 servo:kp_hardware=0.7
 servo:ki_hardware=0.3

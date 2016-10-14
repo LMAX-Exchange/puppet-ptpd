@@ -8,6 +8,8 @@ class ptpd(
   $ptpengine_ip_mode                   = 'hybrid',
   $servo_adev_locked_threshold_low_hw  = '50.000000',
   $servo_adev_locked_threshold_high_hw = '500.000000',
+  $servo_kp                            = undef,
+  $servo_ki                            = undef,
   $global_log_file                     = '/var/log/ptpd.log',
   $log_statistics                      = true,
   $global_statistics_file              = '/var/log/ptpd.stats',
@@ -19,6 +21,11 @@ class ptpd(
   $service_enable                      = true,
   $manage_logrotate                    = true,
 ) {
+  $servo_kp_sw_default = 0.1
+  $servo_ki_sw_default = 0.001
+  $servo_kp_hw_default = 0.7
+  $servo_ki_hw_default = 0.3
+
   #FIXME there's certain bits of validation we don't want to bother doing
   #if we don't actually plan on running PTPd (turning it off)
   if ($service_ensure == 'running' and $ptpengine_interface == undef) {
@@ -41,6 +48,14 @@ class ptpd(
   validate_absolute_path($global_log_file)
   validate_absolute_path($global_statistics_file)
   validate_string($package_name)
+
+  if ($ptpengine_hardware_timestamping_bool) {
+    $real_servo_kp = pick($servo_kp, $servo_kp_hw_default)
+    $real_servo_ki = pick($servo_ki, $servo_ki_hw_default)
+  } else {
+    $real_servo_kp = pick($servo_kp, $servo_kp_sw_default)
+    $real_servo_ki = pick($servo_ki, $servo_ki_sw_default)
+  }
 
   package { $package_name:
     ensure => present,

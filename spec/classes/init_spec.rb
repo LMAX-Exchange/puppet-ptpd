@@ -23,6 +23,10 @@ describe 'ptpd' do
     }) }
     it { is_expected.to contain_file('/etc/ptpd.conf').with_content(/global:statistics_file=\/var\/log\/ptpd\.stats/) }
     it { is_expected.to contain_logrotate__rule('ptpd') }
+    it "should have hardware specific servo KP/KI values" do
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:kp=0\.7/)
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:ki=0\.3/)
+    end
   end
 
   context 'with a custom package name' do
@@ -72,6 +76,17 @@ describe 'ptpd' do
     it "should have different adev hw servo values" do
       is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:adev_locked_threshold_low_hw=15$/)
       is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:adev_locked_threshold_high_hw=45$/)
+    end
+  end
+
+  context 'with ptpengine_hardware_timestamping=false' do
+    let(:params) {{
+      :ptpengine_interface => 'eth0',
+      :ptpengine_hardware_timestamping => false,
+    }}
+    it "should have hardware specific servo KP/KI values" do
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:kp=0\.1/)
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:ki=0\.001/)
     end
   end
 end
