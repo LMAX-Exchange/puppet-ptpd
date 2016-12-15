@@ -89,4 +89,24 @@ describe 'ptpd' do
       is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:ki=0\.001/)
     end
   end
+
+  context 'with clock_leap_second_handling set incorrect' do
+    let(:params) {{
+      :ptpengine_interface => 'eth0',
+      :clock_leap_second_handling => 'woof',
+    }}
+    it "should fail to compile" do
+      expect { is_expected.to compile }.to raise_error(/must be one of/)
+    end
+  end
+
+  context 'with clock_leap_second_handling=ignore' do
+    let(:params) {{
+      :ptpengine_interface => 'eth0',
+      :clock_leap_second_handling => 'ignore',
+    }}
+    it "should have clock_leap_second_handling set to 'ignore'" do
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/clock:leap_second_handling=ignore/)
+    end
+  end
 end

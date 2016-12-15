@@ -10,6 +10,7 @@ class ptpd(
   $servo_adev_locked_threshold_high_hw = '500.000000',
   $servo_kp                            = undef,
   $servo_ki                            = undef,
+  $clock_leap_second_handling          = 'accept',
   $global_log_file                     = '/var/log/ptpd.log',
   $log_statistics                      = true,
   $global_statistics_file              = '/var/log/ptpd.stats',
@@ -55,6 +56,10 @@ class ptpd(
   } else {
     $real_servo_kp = pick($servo_kp, $servo_kp_sw_default)
     $real_servo_ki = pick($servo_ki, $servo_ki_sw_default)
+  }
+
+  if ! ($clock_leap_second_handling in ['accept', 'ignore', 'step', 'smear']) {
+    fail("Parameter 'clock_leap_second_handling' must be one of 'accept', 'ignore', 'step', or 'smear'")
   }
 
   package { $package_name:
