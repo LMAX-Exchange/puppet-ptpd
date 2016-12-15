@@ -129,4 +129,14 @@ describe 'ptpd' do
       is_expected.to contain_file('/etc/ptpd.conf').with_content(/ptpengine:panic_mode_duration=5$/)
     end
   end
+
+  context 'with clock_max_offset_ppm changed' do
+    let(:params) {{
+      :ptpengine_interface => 'eth0',
+      :clock_max_offset_ppm => 1000,
+    }}
+    it "should have clock_max_offset_ppm with a different value" do
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/clock:max_offset_ppm=1000$/)
+    end
+  end
 end

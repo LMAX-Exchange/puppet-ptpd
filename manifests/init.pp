@@ -13,6 +13,7 @@ class ptpd(
   $servo_kp                            = undef,
   $servo_ki                            = undef,
   $clock_leap_second_handling          = 'accept',
+  $clock_max_offset_ppm                = 500,
   $global_log_file                     = '/var/log/ptpd.log',
   $log_statistics                      = true,
   $global_statistics_file              = '/var/log/ptpd.stats',
@@ -66,6 +67,7 @@ class ptpd(
   if ! ($clock_leap_second_handling in ['accept', 'ignore', 'step', 'smear']) {
     fail("Parameter 'clock_leap_second_handling' must be one of 'accept', 'ignore', 'step', or 'smear'")
   }
+  validate_integer($clock_max_offset_ppm, 1000, 500)
 
   package { $package_name:
     ensure => present,
