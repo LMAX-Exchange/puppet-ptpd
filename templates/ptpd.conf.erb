@@ -81,8 +81,12 @@ servo:adev_interval=10
 ; #### BEGIN Other settings
 
 ; panic mode: delay when clock step detected
+<% if @ptpengine_panic_mode_bool -%>
 ptpengine:panic_mode=y
-ptpengine:panic_mode_duration=60
+<% else -%>
+ptpengine:panic_mode=n
+<% end -%>
+ptpengine:panic_mode_duration=<%= @ptpengine_panic_mode_duration %>
 
 ; alarm support
 global:enable_alarms=y

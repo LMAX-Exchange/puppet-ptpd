@@ -6,6 +6,8 @@ class ptpd(
   $ptpengine_hardware_timestamping     = true,
   $ptpengine_delay_mechanism           = 'E2E',
   $ptpengine_ip_mode                   = 'hybrid',
+  $ptpengine_panic_mode                = 'y',
+  $ptpengine_panic_mode_duration       = 30,
   $servo_adev_locked_threshold_low_hw  = '50.000000',
   $servo_adev_locked_threshold_high_hw = '500.000000',
   $servo_kp                            = undef,
@@ -49,6 +51,9 @@ class ptpd(
   validate_absolute_path($global_log_file)
   validate_absolute_path($global_statistics_file)
   validate_string($package_name)
+  $ptpengine_panic_mode_bool = str2bool($ptpengine_panic_mode)
+  validate_bool($ptpengine_panic_mode_bool)
+  validate_integer($ptpengine_panic_mode_duration, 7200, 1)
 
   if ($ptpengine_hardware_timestamping_bool) {
     $real_servo_kp = pick($servo_kp, $servo_kp_hw_default)

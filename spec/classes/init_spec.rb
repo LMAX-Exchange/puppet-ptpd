@@ -109,4 +109,24 @@ describe 'ptpd' do
       is_expected.to contain_file('/etc/ptpd.conf').with_content(/clock:leap_second_handling=ignore/)
     end
   end
+
+  context 'with ptpengine_panic_mode off' do
+    let(:params) {{
+      :ptpengine_interface => 'eth0',
+      :ptpengine_panic_mode => false,
+    }}
+    it "should have panic mode disabled" do
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/ptpengine:panic_mode=n/)
+    end
+  end
+
+  context 'with ptpengine_panic_mode_duration changed' do
+    let(:params) {{
+      :ptpengine_interface => 'eth0',
+      :ptpengine_panic_mode_duration => 5,
+    }}
+    it "should have panic mode duration as a different value" do
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/ptpengine:panic_mode_duration=5$/)
+    end
+  end
 end
