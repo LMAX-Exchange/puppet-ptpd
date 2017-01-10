@@ -24,6 +24,8 @@ class ptpd(
   $service_ensure                      = 'running',
   $service_enable                      = true,
   $manage_logrotate                    = true,
+  $logrotate_rotate_every              = 'day',
+  $logrotate_rotate                    = '7',
 ) {
   $servo_kp_sw_default = 0.1
   $servo_ki_sw_default = 0.001
@@ -108,8 +110,8 @@ class ptpd(
       delaycompress => true,
       copytruncate  => true,
       missingok     => true,
-      rotate_every  => 'day',
-      rotate        => '7',
+      rotate_every  => $logrotate_rotate_every,
+      rotate        => $logrotate_rotate,
       postrotate    => "/bin/kill -HUP $(cat ${global_lock_file} 2>/dev/null) 2> /dev/null || true",
     }
   }
