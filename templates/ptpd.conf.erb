@@ -117,6 +117,11 @@ clock:max_offset_ppm=<%= @clock_max_offset_ppm %>
 ;Leap Second stuff
 clock:leap_second_handling=<%= @clock_leap_second_handling %>
 
+<% if @clock_master_clock_name -%>
+;Master Clock
+clock:master_clock_name=<%= @clock_master_clock_name %>
+
+<% end -%>
 ; log file location
 global:log_file=<%= @global_log_file %>
 

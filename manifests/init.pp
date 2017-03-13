@@ -14,6 +14,7 @@ class ptpd(
   $servo_ki                            = undef,
   $clock_leap_second_handling          = 'accept',
   $clock_max_offset_ppm                = 500,
+  $clock_master_clock_name             = undef,
   $global_log_file                     = '/var/log/ptpd.log',
   $log_statistics                      = true,
   $global_statistics_file              = '/var/log/ptpd.stats',

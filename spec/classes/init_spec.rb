@@ -139,4 +139,14 @@ describe 'ptpd' do
       is_expected.to contain_file('/etc/ptpd.conf').with_content(/clock:max_offset_ppm=1000$/)
     end
   end
+
+  context 'with clock_master_clock_name set' do
+    let(:params) {{
+      :ptpengine_interface => 'eth0',
+      :clock_master_clock_name => 'syst',
+    }}
+    it "should have clock:master_clock_name=syst" do
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/^clock:master_clock_name=syst$/)
+    end
+  end
 end
