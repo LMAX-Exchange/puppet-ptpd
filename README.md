@@ -64,6 +64,18 @@ class { 'ptpd:'
 }
 ~~~
 
+### Running an NTP-backed PTP Master
+
+Have PTPd run as a Master Clock, sending out a signal on interface 'em1'. This assumes NTP is running and disciplining the System Clock:
+
+~~~ puppet
+class { 'ptpd:'
+  ptpengine_interface     => 'em1',
+  clock_master_clock_name => 'syst',
+  ptpengine_preset        => 'masteronly',
+}
+~~~
+
 ## Reference
 
 ### Classes
@@ -109,6 +121,61 @@ IP transmission mode, must be one of `multicast`, `hybrid`, or `unicast`. Hybrid
 Sync and Announce messages are multicast from the master, but delay requests and responses are unicast from the slaves.
 
 Defaults to `hybrid`.
+
+##### `ptpengine_panic_mode`
+
+Enable or disable panic mode, which disables clock updates for `ptpengine_panic_mode_duration` seconds and then steps
+the clock if the offset is above 1 second.
+
+Defaults to `y`.
+
+##### `ptpengine_panic_mode_duration`
+
+How long to be in panic mode for.
+
+Default to `30`.
+
+##### `servo_adev_locked_threshold_low_hw`
+
+Minimum Allan Deviation of a hardware clock's frequency to be considered stable / locked.
+
+Defaults to `50.000000`.
+
+##### `servo_adev_locked_threshold_high_hw`
+
+Allan Deviation of a hardware clock's frequency to be considered no longer stable.
+
+Defaults to `500.000000`.
+
+##### `servo_kp`
+
+The kP value (proportional component gain) of the clock servo PI controller for software clocks.
+
+Defaults to `undef`.
+
+##### `servo_ki`
+
+The kI value (integral component gain) of the clock servo PI controller for software clocks.
+
+Defaults to `undef`.
+
+##### `clock_leap_second_handling`
+
+Controls behaviour during a leap seceond event. Should be one of `accept`, `ignore`, `step`, or `smear`.
+
+Defaults to `accept`.
+
+##### `clock_max_offset_ppm`
+
+Maximum frequency shift which can be applied to a software clock servo.
+
+Defaults to `500`.
+
+##### `clock_master_clock_name`
+
+The name of the preferred clock source.
+
+Defaults to `undef`.
 
 ##### `global_log_file`
 
@@ -170,6 +237,18 @@ Defaults to `true`.
 Manages a logrotate rule for the PTPd log and statistics files. This uses the [b4ldr-logrotate](https://github.com/b4ldr/puppet-logrotate) module.
 
 Defaults to `true`.
+
+##### `logrotate_rotate_every`
+
+Passed to the logrotate class, specifying what period to logrotate on.  See the [b4ldr-logrotate](https://github.com/b4ldr/puppet-logrotate) module.
+
+Defaults to `day`.
+
+##### `logrotate_rotate`
+
+Passed to the logrotate class, specifying how many rotation periods.  See the [b4ldr-logrotate](https://github.com/b4ldr/puppet-logrotate) module.
+
+Defaults to `7`.
 
 ## Limitations
 
