@@ -147,6 +147,18 @@ Allan Deviation of a hardware clock's frequency to be considered no longer stabl
 
 Defaults to `500.000000`.
 
+##### `servo_adev_locked_threshold_low`
+
+Minimum Allan Deviation of a software clock's frequency to be considered stable / locked.
+
+Defaults to `200.000000`.
+
+##### `servo_adev_locked_threshold_high`
+
+Allan Deviation of a software clock's frequency to be considered no longer stable.
+
+Defaults to `2000.000000`.
+
 ##### `servo_kp`
 
 The kP value (proportional component gain) of the clock servo PI controller for software clocks.
