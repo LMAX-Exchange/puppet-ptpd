@@ -77,6 +77,8 @@ class ptpd(
     $real_servo_kp = pick($servo_kp, $servo_kp_sw_default)
     $real_servo_ki = pick($servo_ki, $servo_ki_sw_default)
   }
+  $real_servo_kp_hardware = pick($servo_kp_hardware, $servo_kp_hw_default)
+  $real_servo_ki_hardware = pick($servo_ki_hardware, $servo_ki_hw_default)
 
   if ! ($clock_leap_second_handling in ['accept', 'ignore', 'step', 'smear']) {
     fail("Parameter 'clock_leap_second_handling' must be one of 'accept', 'ignore', 'step', or 'smear'")
