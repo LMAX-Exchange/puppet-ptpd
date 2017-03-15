@@ -67,15 +67,19 @@ describe 'ptpd' do
     end
   end
 
-  context 'with servo_adev_locked_threshold_*_hw settings' do
+  context 'with servo_adev_locked_threshold_* settings' do
     let(:params) {{
       :ptpengine_interface => 'eth0',
       :servo_adev_locked_threshold_low_hw => '15',
       :servo_adev_locked_threshold_high_hw => '45',
+      :servo_adev_locked_threshold_low => '115',
+      :servo_adev_locked_threshold_high => '145',
     }}
     it "should have different adev hw servo values" do
       is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:adev_locked_threshold_low_hw=15$/)
       is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:adev_locked_threshold_high_hw=45$/)
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:adev_locked_threshold_low=115$/)
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:adev_locked_threshold_high=145$/)
     end
   end
 

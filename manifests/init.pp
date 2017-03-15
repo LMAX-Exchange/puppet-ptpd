@@ -10,6 +10,8 @@ class ptpd(
   $ptpengine_panic_mode_duration       = 30,
   $servo_adev_locked_threshold_low_hw  = '50.000000',
   $servo_adev_locked_threshold_high_hw = '500.000000',
+  $servo_adev_locked_threshold_low     = '200.000000',
+  $servo_adev_locked_threshold_high    = '2000.000000',
   $servo_kp                            = undef,
   $servo_ki                            = undef,
   $clock_leap_second_handling          = 'accept',

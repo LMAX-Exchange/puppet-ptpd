@@ -70,8 +70,8 @@ servo:adev_locked_threshold_low_hw=<%= @servo_adev_locked_threshold_low_hw %>
 servo:adev_locked_threshold_high_hw=<%= @servo_adev_locked_threshold_high_hw %>
 
 ; Allan deviation estimates for LOCKED and TRACKING, software clocks (system clock)
-servo:adev_locked_threshold_low=200.000000
-servo:adev_locked_threshold_high=2000.000000
+servo:adev_locked_threshold_low=<%= @servo_adev_locked_threshold_low %>
+servo:adev_locked_threshold_high=<%= @servo_adev_locked_threshold_high %>
 
 ; Allan deviation measurement period
 servo:adev_interval=10
