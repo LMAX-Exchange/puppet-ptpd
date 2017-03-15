@@ -66,12 +66,12 @@ ptpengine:delay_outlier_filter_stepdetect_level=200000
 ; The current value can be observed in the status file
 
 ; Allan deviation estimates for LOCKED and TRACKING, hardware clocks
-servo:adev_locked_threshold_low_hw=<%= @servo_adev_locked_threshold_low_hw %>
-servo:adev_locked_threshold_high_hw=<%= @servo_adev_locked_threshold_high_hw %>
+servo:adev_locked_threshold_low_hw=<%= @real_servo_adev_locked_threshold_low_hw %>
+servo:adev_locked_threshold_high_hw=<%= @real_servo_adev_locked_threshold_high_hw %>
 
 ; Allan deviation estimates for LOCKED and TRACKING, software clocks (system clock)
-servo:adev_locked_threshold_low=<%= @servo_adev_locked_threshold_low %>
-servo:adev_locked_threshold_high=<%= @servo_adev_locked_threshold_high %>
+servo:adev_locked_threshold_low=<%= @real_servo_adev_locked_threshold_low %>
+servo:adev_locked_threshold_high=<%= @real_servo_adev_locked_threshold_high %>
 
 ; Allan deviation measurement period
 servo:adev_interval=10
@@ -113,6 +113,7 @@ clock:store_frequency=Y
 clock:frequency_directory=/etc
 
 clock:max_offset_ppm=<%= @clock_max_offset_ppm %>
+clock:max_offset_ppm_hardware=<%= @clock_max_offset_ppm_hardware %>
 
 ;Leap Second stuff
 clock:leap_second_handling=<%= @clock_leap_second_handling %>

@@ -139,25 +139,25 @@ Default to `30`.
 
 Minimum Allan Deviation of a hardware clock's frequency to be considered stable / locked.
 
-Defaults to `50.000000`.
+Defaults to `undef`.
 
 ##### `servo_adev_locked_threshold_high_hw`
 
 Allan Deviation of a hardware clock's frequency to be considered no longer stable.
 
-Defaults to `500.000000`.
+Defaults to `undef`.
 
 ##### `servo_adev_locked_threshold_low`
 
 Minimum Allan Deviation of a software clock's frequency to be considered stable / locked.
 
-Defaults to `200.000000`.
+Defaults to `undef`.
 
 ##### `servo_adev_locked_threshold_high`
 
 Allan Deviation of a software clock's frequency to be considered no longer stable.
 
-Defaults to `2000.000000`.
+Defaults to `undef`.
 
 ##### `servo_kp`
 
@@ -171,6 +171,18 @@ The kI value (integral component gain) of the clock servo PI controller for soft
 
 Defaults to `undef`.
 
+##### `servo_kp_hardware`
+
+The kP value (proportional component gain) of the clock servo PI controller for hardware clocks.
+
+Defaults to `undef`.
+
+##### `servo_ki_hardware`
+
+The kI value (integral component gain) of the clock servo PI controller for hardware clocks.
+
+Defaults to `undef`.
+
 ##### `clock_leap_second_handling`
 
 Controls behaviour during a leap seceond event. Should be one of `accept`, `ignore`, `step`, or `smear`.
@@ -180,6 +192,12 @@ Defaults to `accept`.
 ##### `clock_max_offset_ppm`
 
 Maximum frequency shift which can be applied to a software clock servo.
+
+Defaults to `500`.
+
+##### `clock_max_offset_ppm_hardware`
+
+Maximum frequency shift which can be applied to a hardware clock servo.
 
 Defaults to `500`.
 

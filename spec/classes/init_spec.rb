@@ -27,6 +27,12 @@ describe 'ptpd' do
       is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:kp=0\.7/)
       is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:ki=0\.3/)
     end
+    it "should have sane defaults for adev thresholds" do
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:adev_locked_threshold_low_hw=50\.000000$/)
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:adev_locked_threshold_high_hw=500.000000$/)
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:adev_locked_threshold_low=200\.000000$/)
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:adev_locked_threshold_high=2000\.000000$/)
+    end
   end
 
   context 'with a custom package name' do

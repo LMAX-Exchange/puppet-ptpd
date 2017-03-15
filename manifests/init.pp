@@ -8,14 +8,17 @@ class ptpd(
   $ptpengine_ip_mode                   = 'hybrid',
   $ptpengine_panic_mode                = 'y',
   $ptpengine_panic_mode_duration       = 30,
-  $servo_adev_locked_threshold_low_hw  = '50.000000',
-  $servo_adev_locked_threshold_high_hw = '500.000000',
-  $servo_adev_locked_threshold_low     = '200.000000',
-  $servo_adev_locked_threshold_high    = '2000.000000',
+  $servo_adev_locked_threshold_low_hw  = undef,
+  $servo_adev_locked_threshold_high_hw = undef,
+  $servo_adev_locked_threshold_low     = undef,
+  $servo_adev_locked_threshold_high    = undef,
   $servo_kp                            = undef,
   $servo_ki                            = undef,
+  $servo_kp_hardware                   = undef,
+  $servo_ki_hardware                   = undef,
   $clock_leap_second_handling          = 'accept',
-  $clock_max_offset_ppm                = 500,
+  $clock_max_offset_ppm                = '500',
+  $clock_max_offset_ppm_hardware       = '2000',
   $clock_master_clock_name             = undef,
   $global_log_file                     = '/var/log/ptpd.log',
   $log_statistics                      = true,
@@ -34,6 +37,12 @@ class ptpd(
   $servo_ki_sw_default = 0.001
   $servo_kp_hw_default = 0.7
   $servo_ki_hw_default = 0.3
+  $servo_adev_locked_threshold_low_hw_default = '50.000000'
+  $servo_adev_locked_threshold_high_hw_default = '500.000000'
+  $servo_adev_locked_threshold_low_default = '200.000000'
+  $servo_adev_locked_threshold_high_default = '2000.000000'
+  #$clock_max_offset_ppm_default = '500'
+  #$clock_max_offset_ppm_hardware_default = '2000'
 
   #FIXME there's certain bits of validation we don't want to bother doing
   #if we don't actually plan on running PTPd (turning it off)
@@ -73,6 +82,15 @@ class ptpd(
     fail("Parameter 'clock_leap_second_handling' must be one of 'accept', 'ignore', 'step', or 'smear'")
   }
   validate_integer($clock_max_offset_ppm, 1000, 500)
+
+  $real_servo_adev_locked_threshold_low = pick($servo_adev_locked_threshold_low,
+                                               $servo_adev_locked_threshold_low_default)
+  $real_servo_adev_locked_threshold_high = pick($servo_adev_locked_threshold_high,
+                                                $servo_adev_locked_threshold_high_default)
+  $real_servo_adev_locked_threshold_low_hw = pick($servo_adev_locked_threshold_low_hw,
+                                                  $servo_adev_locked_threshold_low_hw_default)
+  $real_servo_adev_locked_threshold_high_hw = pick($servo_adev_locked_threshold_high_hw,
+                                                   $servo_adev_locked_threshold_high_hw_default)
 
   package { $package_name:
     ensure => present,
