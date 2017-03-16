@@ -207,6 +207,17 @@ The name of the preferred clock source.
 
 Defaults to `undef`.
 
+##### `clock_extra_clocks`
+
+Have the PTP daemon discipline extra clocks. From the PTPd daemon help:
+
+        The format is type:path:name where "type" can be: "unix" for Unix clocks and "linuxphc"
+         for Linux PHC clocks, "path" is either the clock device path or interface name, and
+         "name" is user's name for the clock (20 characters max). If no name is given, it is
+         extracted from the path name.
+
+Defaults to `undef`.
+
 ##### `global_log_file`
 
 Location of the daemon log file.

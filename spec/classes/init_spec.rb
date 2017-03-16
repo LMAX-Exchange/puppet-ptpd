@@ -159,4 +159,14 @@ describe 'ptpd' do
       is_expected.to contain_file('/etc/ptpd.conf').with_content(/^clock:master_clock_name=syst$/)
     end
   end
+
+  context 'with clock_extra_clocks set' do
+    let(:params) {{
+      :ptpengine_interface => 'eth0',
+      :clock_extra_clocks => 'linuxphc:/dev/ptp0:phc0'
+    }}
+    it "should have clock:extra_clocks=linuxphc:/dev/ptp0:phc0" do
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/^clock:extra_clocks=linuxphc:\/dev\/ptp0:phc0$/)
+    end
+  end
 end

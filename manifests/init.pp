@@ -20,6 +20,7 @@ class ptpd(
   $clock_max_offset_ppm                = '500',
   $clock_max_offset_ppm_hardware       = '2000',
   $clock_master_clock_name             = undef,
+  $clock_extra_clocks                  = undef,
   $global_log_file                     = '/var/log/ptpd.log',
   $log_statistics                      = true,
   $global_statistics_file              = '/var/log/ptpd.stats',

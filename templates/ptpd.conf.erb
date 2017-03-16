@@ -156,6 +156,10 @@ servo:ki=<%= @real_servo_ki %>
 servo:kp_hardware=<%= @real_servo_kp_hardware %>
 servo:ki_hardware=<%= @real_servo_ki_hardware %>
 
+<% if @clock_extra_clocks -%>
+clock:extra_clocks=<%= @clock_extra_clocks %>
+
+<% end -%>
 ; #### END Other settings
 
 ; ######### ptpd 2.3.2-linuxphc configuration END
