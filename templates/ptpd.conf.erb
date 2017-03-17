@@ -128,11 +128,11 @@ clock:master_clock_name=<%= @clock_master_clock_name %>
 
 <% end -%>
 ; log file location
-global:log_file=<%= @global_log_file %>
+global:log_file=<%= @real_global_log_file %>
 
 ; stats log
 <% if @log_statistics_bool -%>
-global:statistics_file=<%= @global_statistics_file %>
+global:statistics_file=<%= @real_global_statistics_file %>
 <% else -%>
 global:statistics_file=
 <% end -%>

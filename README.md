@@ -64,6 +64,47 @@ class { 'ptpd:'
 }
 ~~~
 
+### Single Instance vs Multi Instance
+
+The simplest way to use this module is in `single_instance` mode, where it's your standard one package / one config file / one
+service model. When `single_instance` is set to `true`, you only need to pass parameters to the `ptpd` class.
+
+There is a more complicated way of using this module which is useful if you need to run multiple PTPd daemons on the one
+server (ie: if you are pushing a PTP signal out of multiple discrete interfaces). Multi Instance mode is enabled by setting
+`single_instance` to `false`:
+
+~~~ puppet
+class { 'ptpd':
+  single_instance => false,
+}
+~~~
+
+When configued in Multi Instance mode, you won't get a default configuration file, and you won't get any services. You can use
+the `ptpd::instance` defined type to write out multiple configuration files, and then it is up to you how you start multiple
+daemons (eg: Supervisord). For example, the following code will create two ptpd config files `/etc/ptpd.first.conf` and `/etc/ptpd.second.conf`:
+
+~~~ puppet
+class { 'ptpd':
+  single_instance => false,
+}
+ptpd::instance { 'first':
+  single_instance     => false,
+  ptpengine_interface => 'eth0',
+}
+ptpd::instance { 'second':
+  single_instance     => false,
+  ptpengine_interface => 'eth1',
+}
+~~~
+
+The configuration should be partitioned so that the daemons can run independently of each other. You will need to specify a few command
+line options for those settings which are not read from the configuration file (ie: the conf file itself and the lock file):
+
+~~~ shell
+/usr/sbin/ptpd --global:lock_file=/var/run/ptpd.first.lock --global:status_file=/var/run/ptpd.first.status -c /etc/ptpd.first.conf
+/usr/sbin/ptpd --global:lock_file=/var/run/ptpd.second.lock --global:status_file=/var/run/ptpd.second.status -c /etc/ptpd.second.conf
+~~~
+
 ### Running an NTP-backed PTP Master
 
 Have PTPd run as a Master Clock, sending out a signal on interface 'em1'. This assumes NTP is running and disciplining the System Clock:
@@ -87,6 +128,11 @@ class { 'ptpd:'
 ### Parameters
 
 #### ptpd
+
+##### `single_instance`
+
+This boolean describes whether the class and define are in Single Instance mode or Multi Instance mode.
+When in Multi Instance mode you have the ability to write multiple configuration files but you have to manage the daemons yourself.
 
 ##### `ptpengine_interface`
 
@@ -290,6 +336,12 @@ Defaults to `day`.
 Passed to the logrotate class, specifying how many rotation periods.  See the [b4ldr-logrotate](https://github.com/b4ldr/puppet-logrotate) module.
 
 Defaults to `7`.
+
+### Defines
+
+#### Public Defines
+
+* `ptpd::instance`: writes a PTPd configuration file, see the `ptpd` class for the parameter reference as all options are the same.
 
 ## Limitations
 
