@@ -152,7 +152,7 @@ describe 'ptpd::instance' do
 
     context 'with ptpengine_disable_bmca=y' do
       let(:params) do
-        super().merge({ :ptpengine_disable_bmca => 'y' })
+        super().merge({ :ptpengine_disable_bmca => true })
       end
       it "should have ptpengine:disable_bmca set to y" do
         is_expected.to contain_file('/etc/ptpd.conf').with_content(/^ptpengine:disable_bmca=y$/)
