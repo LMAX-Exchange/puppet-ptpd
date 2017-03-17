@@ -18,7 +18,8 @@ describe 'ptpd::instance' do
       'owner'  => 'root',
       'group'  => 'root',
     }) }
-    it { is_expected.to contain_file('/etc/ptpd.conf').with_content(/global:statistics_file=\/var\/log\/ptpd\.stats/) }
+    it { is_expected.to contain_file('/etc/ptpd.conf').with_content(/^ptpengine:interface=eth0$/) }
+    it { is_expected.to contain_file('/etc/ptpd.conf').with_content(/^global:statistics_file=\/var\/log\/ptpd\.stats/) }
     it { is_expected.to contain_logrotate__rule('ptpd') }
     it "should have hardware specific servo KP/KI values" do
       is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:kp=0\.7/)
@@ -147,6 +148,17 @@ describe 'ptpd::instance' do
       it "should have clock_max_offset_ppm with a different value" do
         is_expected.to contain_file('/etc/ptpd.conf').with_content(/clock:max_offset_ppm=1000$/)
       end
+    end
+  end
+
+  context 'multi-instance with no explicit ptpengine_interface set' do
+    let (:name) { 'eth3' }
+    let (:title) { 'eth3' }
+    let(:params) {{
+      :single_instance => false,
+    }}
+    it "should have ptpengine_interface set to same as namevar" do
+      is_expected.to contain_file('/etc/ptpd.eth3.conf').with_content(/^ptpengine:interface=eth3$/)
     end
   end
 end

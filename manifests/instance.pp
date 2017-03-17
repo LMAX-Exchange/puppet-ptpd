@@ -62,8 +62,12 @@ define ptpd::instance(
   #$clock_max_offset_ppm_default = '500'
   #$clock_max_offset_ppm_hardware_default = '2000'
 
-  if ($ptpengine_interface == undef and $conf_file_ensure != 'absent') {
+  if ($single_instance and $ptpengine_interface == undef and $conf_file_ensure != 'absent') {
     fail("Must specify parameter 'ptpengine_interface' when ptpd service is configured to run")
+  } elsif ($ptpengine_interface == undef and $conf_file_ensure != 'absent') {
+    $real_ptpengine_interface = $name
+  } else {
+    $real_ptpengine_interface = $ptpengine_interface
   }
   validate_integer($ptpengine_domain)
   $ptpengine_hardware_timestamping_bool = str2bool($ptpengine_hardware_timestamping)
