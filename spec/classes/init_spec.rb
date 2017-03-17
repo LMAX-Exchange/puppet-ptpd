@@ -6,7 +6,8 @@ describe 'ptpd' do
 
   context 'single instance with defaults for all parameters' do
     let (:params) {{
-      :single_instance => true,
+      :ptpengine_interface => 'eth0',
+      :single_instance     => true,
     }}
     it { is_expected.to contain_class('ptpd') }
     it { is_expected.to contain_package('ptpd-linuxphc') }
