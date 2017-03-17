@@ -31,7 +31,9 @@ define ptpd::instance(
   $global_statistics_file              = '/var/log/ptpd.stats',
   $global_lock_file                    = '/var/run/ptpd.lock',
   $global_status_file                  = '/var/run/ptpd.status',
-  $conf_file_ensure                    = file,
+  $conf_file_ensure                    = 'file',
+  $conf_file_requires                  = undef,
+  $conf_file_notifies                  = undef,
 ) {
   if ($single_instance) {
     $real_conf_file              = $conf_file
@@ -60,7 +62,7 @@ define ptpd::instance(
   #$clock_max_offset_ppm_default = '500'
   #$clock_max_offset_ppm_hardware_default = '2000'
 
-  if ($ptpengine_interface == undef) {
+  if ($ptpengine_interface == undef and $conf_file_ensure != 'absent') {
     fail("Must specify parameter 'ptpengine_interface' when ptpd service is configured to run")
   }
   validate_integer($ptpengine_domain)
@@ -108,8 +110,8 @@ define ptpd::instance(
     owner   => 'root',
     group   => 'root',
     content => template("${module_name}/ptpd.conf.erb"),
-    require => Package[$::ptpd::package_name],
-    notify  => Service[$::ptpd::service_name],
+    require => $conf_file_requires,
+    notify  => $conf_file_notifies,
   }
 
   if ($manage_logrotate) {

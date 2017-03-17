@@ -295,11 +295,23 @@ Location of the daemon status file.
 
 Defaults to `/var/run/ptpd.status`.
 
+##### `conf_file_ensure`
+
+Ensure parameter of File resources. Set to `absent` to clean up files.
+
+Defaults to `file`.
+
 ##### `package_name`
 
 Specify your own package name.
 
 Defaults to `ptpd-linuxphc`.
+
+##### `package_ensure`
+
+Ensure parameter of Package resources. Set to `absent` to clean up packages.
+
+Defaults to `present`.
 
 ##### `service_name`
 
@@ -309,7 +321,7 @@ Defaults to `ptpd`.
 
 ##### `service_ensure`
 
-The state of the PTPd service.
+The state of the PTPd service. Set to `stopped` to shut down the service.
 
 Defaults to `running`.
 

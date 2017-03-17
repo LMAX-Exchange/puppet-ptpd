@@ -41,12 +41,20 @@ class ptpd(
   validate_string($package_name)
 
   package { $package_name:
-    ensure => $package_ensure,
+    ensure  => $package_ensure,
   }
 
   #LB: if this is a single instance, manage the service as a Puppet service and
   #create a standard configuration file.
   if ($single_instance) {
+    if ($conf_file_ensure == 'absent') {
+      $file_requires = Service[$service_name]
+      $file_notifies = undef
+    } else {
+      $file_requires = Package[$package_name]
+      $file_notifies = Service[$service_name]
+    }
+
     ptpd::instance { 'ptpd':
       single_instance                     => $single_instance,
       ptpengine_interface                 => $ptpengine_interface,
@@ -80,6 +88,8 @@ class ptpd(
       global_lock_file                    => $global_lock_file,
       global_status_file                  => $global_status_file,
       conf_file_ensure                    => $conf_file_ensure,
+      conf_file_requires                  => $conf_file_requires,
+      conf_file_notifies                  => $conf_file_notifies,
     }
 
     #LB: the sysconfig file is only useful if running as a single instance. If
@@ -92,8 +102,8 @@ class ptpd(
       owner   => 'root',
       group   => 'root',
       content => template("${module_name}/ptpd_sysconfig.erb"),
-      require => Package[$package_name],
-      notify  => Service[$service_name],
+      require => $file_requires,
+      notify  => $file_notifies,
     }
 
     service { $service_name:
