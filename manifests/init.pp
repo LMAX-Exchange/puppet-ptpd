@@ -88,8 +88,8 @@ class ptpd(
       global_lock_file                    => $global_lock_file,
       global_status_file                  => $global_status_file,
       conf_file_ensure                    => $conf_file_ensure,
-      conf_file_requires                  => $conf_file_requires,
-      conf_file_notifies                  => $conf_file_notifies,
+      conf_file_requires                  => $file_requires,
+      conf_file_notifies                  => $file_notifies,
     }
 
     #LB: the sysconfig file is only useful if running as a single instance. If
