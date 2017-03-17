@@ -41,6 +41,10 @@ ptpengine:calibration_delay=15
 ptpengine:log_delayreq_override=1
 ptpengine:log_delayreq_interval=0
 
+<% if @ptpengine_disable_bmca -%>
+ptpengine:disable_bmca=<%= @ptpengine_disable_bmca %>
+
+<% end -%>
 ; #### END Basic PTP settings
 
 ; #### BEGIN Filter configuration

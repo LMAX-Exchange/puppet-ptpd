@@ -149,6 +149,15 @@ describe 'ptpd::instance' do
         is_expected.to contain_file('/etc/ptpd.conf').with_content(/clock:max_offset_ppm=1000$/)
       end
     end
+
+    context 'with ptpengine_disable_bmca=y' do
+      let(:params) do
+        super().merge({ :ptpengine_disable_bmca => 'y' })
+      end
+      it "should have ptpengine:disable_bmca set to y" do
+        is_expected.to contain_file('/etc/ptpd.conf').with_content(/^ptpengine:disable_bmca=y$/)
+      end
+    end
   end
 
   context 'multi-instance with no explicit ptpengine_interface set' do

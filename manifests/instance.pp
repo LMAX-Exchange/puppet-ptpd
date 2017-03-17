@@ -8,6 +8,7 @@ define ptpd::instance(
   $ptpengine_ip_mode                   = 'hybrid',
   $ptpengine_panic_mode                = 'y',
   $ptpengine_panic_mode_duration       = 30,
+  $ptpengine_disable_bmca              = undef,
   $servo_adev_locked_threshold_low_hw  = undef,
   $servo_adev_locked_threshold_high_hw = undef,
   $servo_adev_locked_threshold_low     = undef,
