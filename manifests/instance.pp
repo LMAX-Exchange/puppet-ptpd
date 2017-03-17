@@ -119,7 +119,7 @@ define ptpd::instance(
   }
 
   if ($manage_logrotate) {
-    logrotate::rule { $logrotate_rule_name:
+    logrotate::rule { $real_logrotate_rule_name:
       path          => "${real_global_log_file} ${real_global_statistics_file}",
       compress      => true,
       delaycompress => true,
