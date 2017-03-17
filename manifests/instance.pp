@@ -8,7 +8,7 @@ define ptpd::instance(
   $ptpengine_ip_mode                   = 'hybrid',
   $ptpengine_panic_mode                = 'y',
   $ptpengine_panic_mode_duration       = 30,
-  $ptpengine_disable_bmca              = undef,
+  $ptpengine_disable_bmca              = false,
   $servo_adev_locked_threshold_low_hw  = undef,
   $servo_adev_locked_threshold_high_hw = undef,
   $servo_adev_locked_threshold_low     = undef,
@@ -73,6 +73,7 @@ define ptpd::instance(
   validate_integer($ptpengine_domain)
   $ptpengine_hardware_timestamping_bool = str2bool($ptpengine_hardware_timestamping)
   validate_bool($ptpengine_hardware_timestamping_bool)
+  validate_bool($ptpengine_disable_bmca)
   $log_statistics_bool = str2bool($log_statistics)
   validate_bool($log_statistics_bool)
   if ! ($ptpengine_delay_mechanism in [ 'E2E', 'P2P' ]) {

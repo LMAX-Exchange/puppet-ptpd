@@ -175,6 +175,12 @@ the clock if the offset is above 1 second.
 
 Defaults to `y`.
 
+##### `ptpengine_disable_bmca`
+
+Disable the Best Master Clock Algorithm.
+
+Defaults to `false`.
+
 ##### `ptpengine_panic_mode_duration`
 
 How long to be in panic mode for.
