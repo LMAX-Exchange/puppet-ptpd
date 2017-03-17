@@ -26,6 +26,7 @@ class ptpd(
   $manage_logrotate                    = true,
   $logrotate_rotate_every              = 'day',
   $logrotate_rotate                    = '7',
+  $conf_file                           = '/etc/ptpd.conf',
   $global_log_file                     = '/var/log/ptpd.log',
   $global_statistics_file              = '/var/log/ptpd.stats',
   $global_lock_file                    = '/var/run/ptpd.lock',
@@ -69,6 +70,11 @@ class ptpd(
       manage_logrotate                    => $manage_logrotate,
       logrotate_rotate_every              => $logrotate_rotate_every,
       logrotate_rotate                    => $logrotate_rotate,
+      conf_file                           => $conf_file,
+      global_log_file                     => $global_log_file,
+      global_statistics_file              => $global_statistics_file,
+      global_lock_file                    => $global_lock_file,
+      global_status_file                  => $global_status_file,
     }
 
     #LB: the sysconfig file is only useful if running as a single instance. If
