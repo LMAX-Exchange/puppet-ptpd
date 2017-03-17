@@ -46,7 +46,14 @@ describe 'ptpd::instance' do
       is_expected.to contain_file('/etc/ptpd.conf').with_content(/^ptpengine:panic_mode_duration=30$/)
     end
 
-
+    context 'with conf_file_ensure=absnet' do
+      let(:params) do
+        super().merge({
+          :conf_file_ensure => 'absent',
+        })
+      end
+      it { is_expected.to contain_file('/etc/ptpd.conf').with_ensure('absent') }
+    end
 
     context 'with manage_logrotate=false' do
       let(:params) do

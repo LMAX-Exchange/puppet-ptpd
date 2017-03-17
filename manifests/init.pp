@@ -31,7 +31,9 @@ class ptpd(
   $global_statistics_file              = '/var/log/ptpd.stats',
   $global_lock_file                    = '/var/run/ptpd.lock',
   $global_status_file                  = '/var/run/ptpd.status',
+  $conf_file_ensure                    = file,
   $package_name                        = 'ptpd-linuxphc',
+  $package_ensure                      = present,
   $service_name                        = 'ptpd',
   $service_ensure                      = 'running',
   $service_enable                      = true,
@@ -39,7 +41,7 @@ class ptpd(
   validate_string($package_name)
 
   package { $package_name:
-    ensure => present,
+    ensure => $package_ensure,
   }
 
   #LB: if this is a single instance, manage the service as a Puppet service and
@@ -77,6 +79,7 @@ class ptpd(
       global_statistics_file              => $global_statistics_file,
       global_lock_file                    => $global_lock_file,
       global_status_file                  => $global_status_file,
+      conf_file_ensure                    => $conf_file_ensure,
     }
 
     #LB: the sysconfig file is only useful if running as a single instance. If
@@ -85,7 +88,7 @@ class ptpd(
     #line arguments to the PTP daemon just like the Init script does.
     $sysconf_file = '/etc/sysconfig/ptpd'
     file { $sysconf_file:
-      ensure  => file,
+      ensure  => $conf_file_ensure,
       owner   => 'root',
       group   => 'root',
       content => template("${module_name}/ptpd_sysconfig.erb"),

@@ -31,6 +31,7 @@ define ptpd::instance(
   $global_statistics_file              = '/var/log/ptpd.stats',
   $global_lock_file                    = '/var/run/ptpd.lock',
   $global_status_file                  = '/var/run/ptpd.status',
+  $conf_file_ensure                    = file,
 ) {
   if ($single_instance) {
     $real_conf_file              = $conf_file
@@ -103,7 +104,7 @@ define ptpd::instance(
   $real_servo_adev_locked_threshold_high_hw = pick($servo_adev_locked_threshold_high_hw, $servo_adev_locked_threshold_high_hw_default)
 
   file { $real_conf_file:
-    ensure  => file,
+    ensure  => $conf_file_ensure,
     owner   => 'root',
     group   => 'root',
     content => template("${module_name}/ptpd.conf.erb"),
