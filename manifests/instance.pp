@@ -59,7 +59,7 @@ define ptpd::instance(
   #$clock_max_offset_ppm_default = '500'
   #$clock_max_offset_ppm_hardware_default = '2000'
 
-  if ($service_ensure == 'running' and $ptpengine_interface == undef) {
+  if ($ptpengine_interface == undef) {
     fail("Must specify parameter 'ptpengine_interface' when ptpd service is configured to run")
   }
   validate_integer($ptpengine_domain)
@@ -78,7 +78,6 @@ define ptpd::instance(
   }
   validate_absolute_path($real_global_log_file)
   validate_absolute_path($real_global_statistics_file)
-  validate_string($package_name)
   $ptpengine_panic_mode_bool = str2bool($ptpengine_panic_mode)
   validate_bool($ptpengine_panic_mode_bool)
   validate_integer($ptpengine_panic_mode_duration, 7200, 1)
@@ -98,14 +97,10 @@ define ptpd::instance(
   }
   validate_integer($clock_max_offset_ppm, 1000, 500)
 
-  $real_servo_adev_locked_threshold_low = pick($servo_adev_locked_threshold_low,
-                                               $servo_adev_locked_threshold_low_default)
-  $real_servo_adev_locked_threshold_high = pick($servo_adev_locked_threshold_high,
-                                                $servo_adev_locked_threshold_high_default)
-  $real_servo_adev_locked_threshold_low_hw = pick($servo_adev_locked_threshold_low_hw,
-                                                  $servo_adev_locked_threshold_low_hw_default)
-  $real_servo_adev_locked_threshold_high_hw = pick($servo_adev_locked_threshold_high_hw,
-                                                   $servo_adev_locked_threshold_high_hw_default)
+  $real_servo_adev_locked_threshold_low = pick($servo_adev_locked_threshold_low, $servo_adev_locked_threshold_low_default)
+  $real_servo_adev_locked_threshold_high = pick($servo_adev_locked_threshold_high, $servo_adev_locked_threshold_high_default)
+  $real_servo_adev_locked_threshold_low_hw = pick($servo_adev_locked_threshold_low_hw, $servo_adev_locked_threshold_low_hw_default)
+  $real_servo_adev_locked_threshold_high_hw = pick($servo_adev_locked_threshold_high_hw, $servo_adev_locked_threshold_high_hw_default)
 
   file { $real_conf_file:
     ensure  => file,

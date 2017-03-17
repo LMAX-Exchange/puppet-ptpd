@@ -36,6 +36,8 @@ class ptpd(
   $service_ensure                      = 'running',
   $service_enable                      = true,
 ) {
+  validate_string($package_name)
+
   package { $package_name:
     ensure => present,
   }
