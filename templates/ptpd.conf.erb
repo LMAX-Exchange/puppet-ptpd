@@ -36,7 +36,8 @@ ptpengine:calibration_delay=15
 ; the requested message rates - if not supported by the GM,
 ; they will be negotiated down to whatever the GM can offer
 
-; ptpengine:log_sync_interval=-5
+; Sync message interval
+ptpengine:log_sync_interval=<%= @ptpengine_log_sync_interval %>
 
 ptpengine:log_delayreq_override=1
 ptpengine:log_delayreq_interval=0

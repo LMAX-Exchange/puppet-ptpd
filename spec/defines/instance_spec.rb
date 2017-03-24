@@ -8,10 +8,11 @@ describe 'ptpd::instance' do
     let (:name) { 'ptpd' }
     let (:title) { 'ptpd' }
     let (:params) {{
-      :single_instance         => true,
-      :ptpengine_interface     => 'eth0',
-      :clock_extra_clocks      => 'linuxphc:/dev/ptp0:phc0',
-      :clock_master_clock_name => 'syst',
+      :single_instance             => true,
+      :ptpengine_interface         => 'eth0',
+      :clock_extra_clocks          => 'linuxphc:/dev/ptp0:phc0',
+      :clock_master_clock_name     => 'syst',
+      :ptpengine_log_sync_interval => '-3',
     }}
     it { is_expected.to contain_file('/etc/ptpd.conf').with({
       'ensure' => 'file',
@@ -45,6 +46,9 @@ describe 'ptpd::instance' do
       end
     it "should have panic mode duration set to 30 seconds" do
       is_expected.to contain_file('/etc/ptpd.conf').with_content(/^ptpengine:panic_mode_duration=30$/)
+    end
+    it "should have a sync interval set to -3" do
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/^ptpengine:log_sync_interval=-3$/)
     end
 
     context 'with conf_file_ensure=absnet' do

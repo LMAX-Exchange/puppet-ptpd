@@ -9,6 +9,7 @@ define ptpd::instance(
   $ptpengine_panic_mode                = 'y',
   $ptpengine_panic_mode_duration       = 30,
   $ptpengine_disable_bmca              = false,
+  $ptpengine_log_sync_interval         = 0,
   $servo_adev_locked_threshold_low_hw  = undef,
   $servo_adev_locked_threshold_high_hw = undef,
   $servo_adev_locked_threshold_low     = undef,
@@ -90,6 +91,7 @@ define ptpd::instance(
   $ptpengine_panic_mode_bool = str2bool($ptpengine_panic_mode)
   validate_bool($ptpengine_panic_mode_bool)
   validate_integer($ptpengine_panic_mode_duration, 7200, 1)
+  validate_integer($ptpengine_log_sync_interval, 7, -7)
 
   if ($ptpengine_hardware_timestamping_bool) {
     $real_servo_kp = pick($servo_kp, $servo_kp_hw_default)
