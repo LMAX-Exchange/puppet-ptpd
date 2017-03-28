@@ -54,6 +54,9 @@ describe 'ptpd::instance' do
     it "should have a sync interval set to -3" do
       is_expected.to contain_file('/etc/ptpd.conf').with_content(/^ptpengine:log_sync_interval=-3$/)
     end
+    it "should have a cpu pinning of 0" do
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/^global:cpuaffinity_cpucore=0$/)
+    end
 
     context 'with conf_file_ensure=absnet' do
       let(:params) do
@@ -164,6 +167,15 @@ describe 'ptpd::instance' do
       end
       it "should have ptpengine:disable_bmca set to y" do
         is_expected.to contain_file('/etc/ptpd.conf').with_content(/^ptpengine:disable_bmca=y$/)
+      end
+    end
+
+    context 'with ptpengine_disable_bmca=y' do
+      let(:params) do
+        super().merge({ :global_cpuaffinity_cpucore => 1 })
+      end
+      it "should have global:cpuaffinity_cpucore=1" do
+        is_expected.to contain_file('/etc/ptpd.conf').with_content(/^global:cpuaffinity_cpucore=1$/)
       end
     end
   end

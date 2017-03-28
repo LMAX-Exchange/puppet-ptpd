@@ -34,6 +34,7 @@ define ptpd::instance(
   $global_statistics_file              = '/var/log/ptpd.stats',
   $global_lock_file                    = '/var/run/ptpd.lock',
   $global_status_file                  = '/var/run/ptpd.status',
+  $global_cpuaffinity_cpucore          = 0,
   $conf_file_ensure                    = 'file',
   $conf_file_requires                  = undef,
   $conf_file_notifies                  = undef,
@@ -113,6 +114,9 @@ define ptpd::instance(
     $real_servo_adev_locked_threshold_high = pick($servo_adev_locked_threshold_high, $servo_adev_locked_threshold_high_default)
     $real_servo_adev_locked_threshold_low_hw = pick($servo_adev_locked_threshold_low_hw, $servo_adev_locked_threshold_low_hw_default)
     $real_servo_adev_locked_threshold_high_hw = pick($servo_adev_locked_threshold_high_hw, $servo_adev_locked_threshold_high_hw_default)
+
+    #ensure we have always got a "good" cpu core value
+    $real_global_cpuaffinity_cpucore = pick($global_cpuaffinity_cpucore, 0)
 
     file { $real_conf_file:
       ensure  => $conf_file_ensure,

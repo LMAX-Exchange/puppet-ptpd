@@ -307,6 +307,12 @@ Location of the daemon status file.
 
 Defaults to `/var/run/ptpd.status`.
 
+##### `global_cpuaffinity_cpucore`
+
+Set a CPU core to bind on to.
+
+Defaults to `0`.
+
 ##### `conf_file_ensure`
 
 Ensure parameter of File resources. Set to `absent` to clean up files.
