@@ -132,6 +132,11 @@ clock:leap_second_handling=<%= @clock_leap_second_handling %>
 clock:master_clock_name=<%= @clock_master_clock_name %>
 
 <% end -%>
+<% if @clock_disabled_clock_names %>
+;Disabled Clocks
+clock:disabled_clock_names=<%= @clock_disabled_clock_names %>
+
+<% end -%>
 ; log file location
 global:log_file=<%= @real_global_log_file %>
 

@@ -259,6 +259,12 @@ The name of the preferred clock source.
 
 Defaults to `undef`.
 
+##### `clock_disabled_clock_names`
+
+Disables disciplining on this list of clocks.
+
+Defaults to `undef`.
+
 ##### `clock_extra_clocks`
 
 Have the PTP daemon discipline extra clocks. From the PTPd daemon help:

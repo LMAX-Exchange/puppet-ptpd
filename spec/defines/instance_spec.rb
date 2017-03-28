@@ -13,6 +13,7 @@ describe 'ptpd::instance' do
       :clock_extra_clocks          => 'linuxphc:/dev/ptp0:phc0',
       :clock_master_clock_name     => 'syst',
       :ptpengine_log_sync_interval => '-3',
+      :clock_disabled_clock_names  => 'foo',
     }}
     it { is_expected.to contain_file('/etc/ptpd.conf').with({
       'ensure' => 'file',
@@ -41,9 +42,12 @@ describe 'ptpd::instance' do
     it "should have clock:master_clock_name=syst" do
       is_expected.to contain_file('/etc/ptpd.conf').with_content(/^clock:master_clock_name=syst$/)
     end
-      it "should have panic mode enabled" do
-        is_expected.to contain_file('/etc/ptpd.conf').with_content(/^ptpengine:panic_mode=y$/)
-      end
+    it "should have clock:disabled_clock_names=foo" do
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/^clock:disabled_clock_names=foo$/)
+    end
+    it "should have panic mode enabled" do
+      is_expected.to contain_file('/etc/ptpd.conf').with_content(/^ptpengine:panic_mode=y$/)
+    end
     it "should have panic mode duration set to 30 seconds" do
       is_expected.to contain_file('/etc/ptpd.conf').with_content(/^ptpengine:panic_mode_duration=30$/)
     end
