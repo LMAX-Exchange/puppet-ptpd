@@ -36,7 +36,7 @@ class ptpd(
   $global_status_file                  = '/var/run/ptpd.status',
   $global_cpuaffinity_cpucore          = 0,
   $conf_file_ensure                    = 'file',
-  $package_name                        = 'ptpd-linuxphc',
+  $package_name                        = 'ptpd-libcck',
   $package_ensure                      = 'present',
   $service_name                        = 'ptpd',
   $service_ensure                      = 'running',

@@ -38,7 +38,7 @@ At the time of writing this was not merged into mainline, nor where there packag
 
 So, you need to build your own from source, which can be found here:
 
-https://github.com/wowczarek/ptpd/tree/wowczarek-2.3.2-hwtest
+https://github.com/wowczarek/ptpd/tree/wowczarek-2.3.2-libcck
 
 This module depends on [b4ldr-logrotate](https://github.com/b4ldr/puppet-logrotate) for log rotation, but this can be disabled.
 
