@@ -5,7 +5,7 @@ define ptpd::instance(
   $ptpengine_preset                    = 'slaveonly',
   $ptpengine_hardware_timestamping     = true,
   $ptpengine_delay_mechanism           = 'E2E',
-  $ptpengine_ip_mode                   = 'hybrid',
+  $ptpengine_mode                      = 'hybrid',
   $ptpengine_panic_mode                = 'y',
   $ptpengine_panic_mode_duration       = 30,
   $ptpengine_disable_bmca              = false,
@@ -82,8 +82,8 @@ define ptpd::instance(
   if ! ($ptpengine_delay_mechanism in [ 'E2E', 'P2P' ]) {
     fail("Parameter 'ptpengine_delay_mechanism' must be on of 'E2E' or 'P2P'")
   }
-  if ! ($ptpengine_ip_mode in ['multicast','hybrid','unicast']) {
-    fail("Parameter 'ptpengine_ip_mode' must be one of 'multicast', 'hybrid' or 'unicast'")
+  if ! ($ptpengine_mode in ['multicast','hybrid','unicast']) {
+    fail("Parameter 'ptpengine_mode' must be one of 'multicast', 'hybrid' or 'unicast'")
   }
   if ! ($ptpengine_preset in ['slaveonly','masterslave','masteronly']) {
       fail("Parameter 'ptpengine_preset' must be one of 'slaveonly', 'masterslave' or 'masteronly'")

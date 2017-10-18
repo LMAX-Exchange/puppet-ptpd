@@ -10,7 +10,7 @@ describe 'ptpd' do
       :single_instance     => true,
     }}
     it { is_expected.to contain_class('ptpd') }
-    it { is_expected.to contain_package('ptpd-linuxphc').with_ensure('present') }
+    it { is_expected.to contain_package('ptpd-libcck').with_ensure('present') }
     it { is_expected.to contain_service('ptpd').with({
       'ensure'     => 'running',
       'enable'     => true,
@@ -23,7 +23,7 @@ describe 'ptpd' do
     it { is_expected.to contain_file('/etc/sysconfig/ptpd').with_content(/PTPD_PID_FILE="\/var\/run\/ptpd\.lock"/) }
     it { is_expected.to contain_file('/etc/sysconfig/ptpd').with_content(/PTPD_STATUS_FILE="\/var\/run\/ptpd\.status"/) }
     it { is_expected.to contain_file('/etc/sysconfig/ptpd').that_notifies('Service[ptpd]') }
-    it { is_expected.to contain_file('/etc/sysconfig/ptpd').that_requires('Package[ptpd-linuxphc]') }
+    it { is_expected.to contain_file('/etc/sysconfig/ptpd').that_requires('Package[ptpd-libcck]') }
 
     context 'with a custom package name' do
       let(:params) do
@@ -40,7 +40,7 @@ describe 'ptpd' do
       :service_ensure   => 'stopped',
       :service_enable   => 'false',
     }}
-    it { is_expected.to contain_package('ptpd-linuxphc').with_ensure('absent') }
+    it { is_expected.to contain_package('ptpd-libcck').with_ensure('absent') }
     it { is_expected.to contain_service('ptpd').with_ensure('stopped') }
     it { is_expected.to contain_service('ptpd').with_enable('false') }
     it { is_expected.to contain_file('/etc/sysconfig/ptpd').with_ensure('absent') }
@@ -53,7 +53,7 @@ describe 'ptpd' do
       :single_instance => false,
     }}
     it { is_expected.to contain_class('ptpd') }
-    it { is_expected.to contain_package('ptpd-linuxphc') }
+    it { is_expected.to contain_package('ptpd-libcck') }
     it { is_expected.not_to contain_service('ptpd') }
 
     context 'with a custom package name' do
