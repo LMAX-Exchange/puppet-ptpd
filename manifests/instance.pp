@@ -24,6 +24,7 @@ define ptpd::instance(
   $clock_master_clock_name             = undef,
   $clock_extra_clocks                  = undef,
   $clock_disabled_clock_names          = undef,
+  $clock_readonly_clock_names          = undef,
   $log_statistics                      = true,
   $manage_logrotate                    = true,
   $logrotate_rotate_every              = 'day',
