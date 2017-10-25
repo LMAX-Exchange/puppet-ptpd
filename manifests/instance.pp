@@ -87,49 +87,49 @@ define ptpd::instance(
   }
   if ! ($ptpengine_preset in ['slaveonly','masterslave','masteronly']) {
       fail("Parameter 'ptpengine_preset' must be one of 'slaveonly', 'masterslave' or 'masteronly'")
-    }
-    validate_absolute_path($real_global_log_file)
-    validate_absolute_path($real_global_statistics_file)
-    $ptpengine_panic_mode_bool = str2bool($ptpengine_panic_mode)
-    validate_bool($ptpengine_panic_mode_bool)
-    validate_integer($ptpengine_panic_mode_duration, 7200, 1)
-    validate_integer($ptpengine_log_sync_interval, 7, -7)
+  }
+  validate_absolute_path($real_global_log_file)
+  validate_absolute_path($real_global_statistics_file)
+  $ptpengine_panic_mode_bool = str2bool($ptpengine_panic_mode)
+  validate_bool($ptpengine_panic_mode_bool)
+  validate_integer($ptpengine_panic_mode_duration, 7200, 1)
+  validate_integer($ptpengine_log_sync_interval, 7, -7)
 
-    if ($ptpengine_hardware_timestamping_bool) {
-      $real_servo_kp = pick($servo_kp, $servo_kp_hw_default)
-      $real_servo_ki = pick($servo_ki, $servo_ki_hw_default)
-    } else {
-      $real_servo_kp = pick($servo_kp, $servo_kp_sw_default)
-      $real_servo_ki = pick($servo_ki, $servo_ki_sw_default)
-    }
-    $real_servo_kp_hardware = pick($servo_kp_hardware, $servo_kp_hw_default)
-    $real_servo_ki_hardware = pick($servo_ki_hardware, $servo_ki_hw_default)
+  if ($ptpengine_hardware_timestamping_bool) {
+    $real_servo_kp = pick($servo_kp, $servo_kp_hw_default)
+    $real_servo_ki = pick($servo_ki, $servo_ki_hw_default)
+  } else {
+    $real_servo_kp = pick($servo_kp, $servo_kp_sw_default)
+    $real_servo_ki = pick($servo_ki, $servo_ki_sw_default)
+  }
+  $real_servo_kp_hardware = pick($servo_kp_hardware, $servo_kp_hw_default)
+  $real_servo_ki_hardware = pick($servo_ki_hardware, $servo_ki_hw_default)
 
-    if ! ($clock_leap_second_handling in ['accept', 'ignore', 'step', 'smear']) {
-      fail("Parameter 'clock_leap_second_handling' must be one of 'accept', 'ignore', 'step', or 'smear'")
-    }
-    validate_integer($clock_max_offset_ppm, 1000, 500)
+  if ! ($clock_leap_second_handling in ['accept', 'ignore', 'step', 'smear']) {
+    fail("Parameter 'clock_leap_second_handling' must be one of 'accept', 'ignore', 'step', or 'smear'")
+  }
+  validate_integer($clock_max_offset_ppm, 1000, 500)
 
-    $real_servo_adev_locked_threshold_low = pick($servo_adev_locked_threshold_low, $servo_adev_locked_threshold_low_default)
-    $real_servo_adev_locked_threshold_high = pick($servo_adev_locked_threshold_high, $servo_adev_locked_threshold_high_default)
-    $real_servo_adev_locked_threshold_low_hw = pick($servo_adev_locked_threshold_low_hw, $servo_adev_locked_threshold_low_hw_default)
-    $real_servo_adev_locked_threshold_high_hw = pick($servo_adev_locked_threshold_high_hw, $servo_adev_locked_threshold_high_hw_default)
+  $real_servo_adev_locked_threshold_low = pick($servo_adev_locked_threshold_low, $servo_adev_locked_threshold_low_default)
+  $real_servo_adev_locked_threshold_high = pick($servo_adev_locked_threshold_high, $servo_adev_locked_threshold_high_default)
+  $real_servo_adev_locked_threshold_low_hw = pick($servo_adev_locked_threshold_low_hw, $servo_adev_locked_threshold_low_hw_default)
+  $real_servo_adev_locked_threshold_high_hw = pick($servo_adev_locked_threshold_high_hw, $servo_adev_locked_threshold_high_hw_default)
 
-    #ensure we have always got a "good" cpu core value
-    $real_global_cpuaffinity_cpucore = pick($global_cpuaffinity_cpucore, 0)
+  #ensure we have always got a "good" cpu core value
+  $real_global_cpuaffinity_cpucore = pick($global_cpuaffinity_cpucore, 0)
 
-    file { $real_conf_file:
-      ensure  => $conf_file_ensure,
-      owner   => 'root',
-      group   => 'root',
-      content => template("${module_name}/ptpd.conf.erb"),
-      require => $conf_file_requires,
-      notify  => $conf_file_notifies,
-    }
+  file { $real_conf_file:
+    ensure  => $conf_file_ensure,
+    owner   => 'root',
+    group   => 'root',
+    content => template("${module_name}/ptpd.conf.erb"),
+    require => $conf_file_requires,
+    notify  => $conf_file_notifies,
+  }
 
-    if ($manage_logrotate) {
-      logrotate::rule { $real_logrotate_rule_name:
-        path          => "${real_global_log_file} ${real_global_statistics_file}",
+  if ($manage_logrotate) {
+    logrotate::rule { $real_logrotate_rule_name:
+      path          => "${real_global_log_file} ${real_global_statistics_file}",
       compress      => true,
       delaycompress => true,
       copytruncate  => true,
