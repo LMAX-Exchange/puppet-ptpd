@@ -42,6 +42,16 @@ ptpengine:log_sync_interval=<%= @ptpengine_log_sync_interval %>
 ptpengine:log_delayreq_override=1
 ptpengine:log_delayreq_interval=0
 
+<% if @ptpengine_timing_acl_order -%>
+ptpengine:timing_acl_order=<%= @ptpengine_timing_acl_order %>
+<% end -%>
+<% if @ptpengine_timing_acl_permit -%>
+ptpengine:timing_acl_permit=<%= @ptpengine_timing_acl_permit %>
+<% end -%>
+<% if @ptpengine_timing_acl_deny -%>
+ptpengine:timing_acl_deny=<%= @ptpengine_timing_acl_deny %>
+<% end -%>
+
 <% if @ptpengine_disable_bmca -%>
 ptpengine:disable_bmca=y
 
@@ -62,6 +72,7 @@ ptpengine:delay_stat_filter_enable=n
 ptpengine:delay_outlier_filter_stepdetect_enable=y
 ptpengine:delay_outlier_filter_stepdetect_threshold=1000000
 ptpengine:delay_outlier_filter_stepdetect_level=200000
+
 
 ; #### END Filter Configuration
 

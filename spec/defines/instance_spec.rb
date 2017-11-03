@@ -178,6 +178,21 @@ describe 'ptpd::instance' do
         is_expected.to contain_file('/etc/ptpd.conf').with_content(/^global:cpuaffinity_cpucore=1$/)
       end
     end
+
+    context 'with ptpengine:timing_acl params set' do
+      let(:params) do
+        super().merge({
+          :ptpengine_timing_acl_order => 'permit,deny',
+          :ptpengine_timing_acl_permit => '192.168.100.1',
+          :ptpengine_timing_acl_deny => '192.168.100.2,192.168.100.3',
+        })
+      end
+      it "should have ptpengine:timing_acl settings" do
+        is_expected.to contain_file('/etc/ptpd.conf').with_content(/^ptpengine:timing_acl_order=permit,deny$/)
+        is_expected.to contain_file('/etc/ptpd.conf').with_content(/^ptpengine:timing_acl_permit=192.168.100.1$/)
+        is_expected.to contain_file('/etc/ptpd.conf').with_content(/^ptpengine:timing_acl_deny=192.168.100.2,192.168.100.3$/)
+      end
+    end
   end
 
   context 'multi-instance with no explicit ptpengine_interface set' do
