@@ -128,5 +128,11 @@ class ptpd(
       hasstatus  => true,
       hasrestart => true,
     }
+  } else {
+    #If we are in multi-instance mode, ensure the main config file doesn't exist otherwise
+    #it might conflict with other ptpd daemons if it is accidentally started.
+    file { $conf_file:
+      ensure => absent,
+    }
   }
 }
