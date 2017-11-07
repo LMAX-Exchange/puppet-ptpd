@@ -7,7 +7,7 @@ class ptpd(
   $ptpengine_hardware_timestamping     = true,
   $ptpengine_delay_mechanism           = 'E2E',
   $ptpengine_mode                      = 'hybrid',
-  $ptpengine_panic_mode                = 'y',
+  $ptpengine_panic_mode                = true,
   $ptpengine_panic_mode_duration       = 30,
   $ptpengine_disable_bmca              = false,
   $ptpengine_log_sync_interval         = 0,
