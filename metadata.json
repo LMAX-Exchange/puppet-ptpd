@@ -1,14 +1,18 @@
 {
   "name": "lmaxexchange-ptpd",
   "version": "2.0.0",
-  "author": "LMAX-Exchange",
+  "author": "LMAX Exchange",
   "summary": "Manages the Precision Time Procotol software, ptpd.",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "source": "https://github.com/LMAX-Exchange/puppet-ptpd",
   "project_page": "https://github.com/LMAX-Exchange/puppet-ptpd",
   "issues_url": "https://github.com/LMAX-Exchange/puppet-ptpd/issues",
   "dependencies": [
-    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
-  ]
+    {"name":"puppetlabs-stdlib","version_requirement":">= 4.13.1 < 5.0.0"},
+    {"name":"voxpupuli-logrotate", "version_requirement": "2.0.0"}
+  ],
+  "requirements": [
+    {"name": "puppet", "version_requirement": ">= 3.0.0 < 5.0.0"}
+  ],
+  "data_provider": null
 }
-
