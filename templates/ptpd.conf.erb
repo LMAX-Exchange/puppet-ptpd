@@ -185,6 +185,11 @@ clock:extra_clocks=<%= @clock_extra_clocks %>
 clock:readonly_clock_names=<%= @clock_readonly_clock_names %>
 
 <% end -%>
+<% if @global_log_json -%>
+global:log_json=y
+global:json_file=<%= @global_json_file %>
+
+<% end -%>
 ; #### END Other settings
 
 ; ######### ptpd 2.3.2-linuxphc configuration END

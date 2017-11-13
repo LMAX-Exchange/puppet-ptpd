@@ -38,6 +38,8 @@ define ptpd::instance(
   $global_statistics_file              = '/var/log/ptpd.stats',
   $global_lock_file                    = '/var/run/ptpd.lock',
   $global_status_file                  = '/var/run/ptpd.status',
+  $global_log_json                     = false,
+  $global_json_file                    = '/var/run/ptpd.json',
   $global_cpuaffinity_cpucore          = 0,
   $conf_file_ensure                    = 'file',
   $conf_file_requires                  = undef,
@@ -113,6 +115,8 @@ define ptpd::instance(
     fail("Parameter 'clock_leap_second_handling' must be one of 'accept', 'ignore', 'step', or 'smear'")
   }
   validate_integer($clock_max_offset_ppm, 1000, 500)
+
+  validate_bool($global_log_json)
 
   $real_servo_adev_locked_threshold_low = pick($servo_adev_locked_threshold_low, $servo_adev_locked_threshold_low_default)
   $real_servo_adev_locked_threshold_high = pick($servo_adev_locked_threshold_high, $servo_adev_locked_threshold_high_default)

@@ -22,6 +22,7 @@ describe 'ptpd::instance' do
     }) }
     it { is_expected.to contain_file('/etc/ptpd.conf').with_content(/^ptpengine:interface=eth0$/) }
     it { is_expected.to contain_file('/etc/ptpd.conf').with_content(/^global:statistics_file=\/var\/log\/ptpd\.stats/) }
+    it { is_expected.not_to contain_file('/etc/ptpd.conf').with_content(/^global:json_file=/) }
     it { is_expected.to contain_logrotate__rule('ptpd') }
     it "should have hardware specific servo KP/KI values" do
       is_expected.to contain_file('/etc/ptpd.conf').with_content(/servo:kp=0\.7/)
@@ -191,6 +192,17 @@ describe 'ptpd::instance' do
         is_expected.to contain_file('/etc/ptpd.conf').with_content(/^ptpengine:timing_acl_order=permit,deny$/)
         is_expected.to contain_file('/etc/ptpd.conf').with_content(/^ptpengine:timing_acl_permit=192.168.100.1$/)
         is_expected.to contain_file('/etc/ptpd.conf').with_content(/^ptpengine:timing_acl_deny=192.168.100.2,192.168.100.3$/)
+      end
+    end
+
+    context 'with the JSON file enabled' do
+      let(:params) do
+        super().merge({
+          :global_log_json => true,
+        })
+      end
+      it "should have global:json_file set" do
+        is_expected.to contain_file('/etc/ptpd.conf').with_content(/^global:json_file=\/var\/run\/ptpd\.json$/)
       end
     end
   end
