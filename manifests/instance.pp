@@ -26,6 +26,7 @@ define ptpd::instance(
   $clock_max_offset_ppm_hardware       = '2000',
   $clock_master_clock_name             = undef,
   $clock_extra_clocks                  = undef,
+  $clock_no_step                       = false,
   $clock_disabled_clock_names          = undef,
   $clock_readonly_clock_names          = undef,
   $log_statistics                      = true,
@@ -117,6 +118,7 @@ define ptpd::instance(
   validate_integer($clock_max_offset_ppm, 1000, 500)
 
   validate_bool($global_log_json)
+  validate_bool($clock_no_step)
 
   $real_servo_adev_locked_threshold_low = pick($servo_adev_locked_threshold_low, $servo_adev_locked_threshold_low_default)
   $real_servo_adev_locked_threshold_high = pick($servo_adev_locked_threshold_high, $servo_adev_locked_threshold_high_default)

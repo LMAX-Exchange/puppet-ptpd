@@ -119,6 +119,13 @@ clock:allow_step_backwards=N
 ; this should be set to Y because a NIC may randomly reset the clock
 clock:allow_step_backwards_hw=Y
 
+; allow clock steps or not
+<% if @clock_no_step -%>
+clock:no_step=Y
+<% else -%>
+clock:no_step=N
+<% end -%>
+
 ; bind to selected CPU core for improved system latency characteristics
 ; core 0 = first core
 global:cpuaffinity_cpucore=<%= @real_global_cpuaffinity_cpucore %>

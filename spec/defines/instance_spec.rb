@@ -205,6 +205,17 @@ describe 'ptpd::instance' do
         is_expected.to contain_file('/etc/ptpd.conf').with_content(/^global:json_file=\/var\/run\/ptpd\.json$/)
       end
     end
+
+    context 'with clock:no_step set' do
+      let(:params) do
+        super().merge({
+          :clock_no_step => true,
+        })
+      end
+      it "should have clock:no_step set" do
+        is_expected.to contain_file('/etc/ptpd.conf').with_content(/^clock:no_step=Y$/)
+      end
+    end
   end
 
   context 'multi-instance with no explicit ptpengine_interface set' do
