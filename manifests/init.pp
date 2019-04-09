@@ -33,7 +33,7 @@ class ptpd(
   $log_statistics                      = true,
   $manage_logrotate                    = true,
   $logrotate_rotate_every              = 'day',
-  $logrotate_rotate                    = '7',
+  Integer $logrotate_rotate            = 7,
   $conf_file                           = '/etc/ptpd.conf',
   $global_log_file                     = '/var/log/ptpd.log',
   $global_statistics_file              = '/var/log/ptpd.stats',

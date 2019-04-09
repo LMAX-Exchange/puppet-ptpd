@@ -32,7 +32,7 @@ define ptpd::instance(
   $log_statistics                      = true,
   $manage_logrotate                    = true,
   $logrotate_rotate_every              = 'day',
-  $logrotate_rotate                    = '7',
+  Integer $logrotate_rotate            = 7,
   $conf_file                           = '/etc/ptpd.conf',
   $logrotate_rule_name                 = 'ptpd',
   $global_log_file                     = '/var/log/ptpd.log',

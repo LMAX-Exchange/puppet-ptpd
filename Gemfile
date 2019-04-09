@@ -1,4 +1,6 @@
-source ENV['GEM_SOURCE'] || "https://rubygems.org"
+## file managed by modulesync_configs
+## Any manual changes will be overwritten
+source ENV['GEM_SOURCE'] || "http://rubygems.org"
 
 def location_for(place, fake_version = nil)
   if place =~ /^(git[:@][^#]*)#(.*)/
@@ -10,7 +12,7 @@ def location_for(place, fake_version = nil)
   end
 end
 
-group :development, :unit_tests do
+group :test do
   gem 'json',                                                       :require => false
   gem 'puppet-lint-absolute_classname-check',                       :require => false
   gem 'puppet-lint-classes_and_types_beginning_with_digits-check',  :require => false
@@ -21,68 +23,51 @@ group :development, :unit_tests do
   gem 'puppet_facts',                                               :require => false
   gem 'rspec-puppet-facts',                                         :require => false
   gem 'rspec-puppet-utils',                                         :require => false
-  gem 'rspec-puppet', '>= 2.5.0',                                   :require => false
+  gem 'rspec-puppet',                                               :require => false
+  gem 'xmlrpc',                                                     :require => false
+  gem 'safe_yaml',                                                  :require => false
   gem 'simplecov',                                                  :require => false
-  gem 'simplecov-console', '~> 0.4',                                :require => false if RUBY_VERSION.to_f >= 2.0
-  gem 'simplecov-console', '0.3.1',                                 :require => false if RUBY_VERSION.to_f <= 1.9
-  gem 'metadata-json-lint', '1.2.2',                                :require => false if RUBY_VERSION.to_f == 2.1
-  gem 'metadata-json-lint', '1.1.0',                                :require => false if RUBY_VERSION.to_f <= 1.9
-  gem 'rake', '< 11',                                               :require => false
-  gem 'rspec', '< 3.2.0',                                           :require => false
-  gem 'syck',                                                       :require => false if RUBY_VERSION.to_f >= 2.2
-  gem 'rubocop', '0.33.0',                                          :require => false if RUBY_VERSION.to_f >= 1.9
-  gem 'rubocop', '<= 0.5.0',                                        :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'i18n', '0.6.0',                                              :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'nokogiri', '1.6.8.1',                                        :require => false if RUBY_VERSION.to_f == 1.9
-  gem 'nokogiri', '1.5.11',                                         :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'mime-types', '1.25.1',                                       :require => false if RUBY_VERSION.to_f <= 1.8
-  gem 'mime-types', '2.99.3',                                       :require => false if RUBY_VERSION.to_f <= 1.9
-  gem 'hocon', '0.1.0',                                             :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'addressable', '<= 2.3.8',                                    :require => false if RUBY_VERSION.to_f < 2.0
-  gem 'hitimes', '<= 1.2.1',                                        :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'celluloid', '<= 0.10.0',                                     :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'highline', '<= 1.6.21',                                      :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'rest-client', '<= 1.6.9',                                    :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'json_pure', '<= 1.8.3',                                      :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'retriable', '<= 1.4.1',                                      :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'rainbow', '<= 1.99.2',                                       :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'tins', '<= 1.6.0',                                           :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'listen', '<= 3.0.7',                                         :require => false if RUBY_VERSION.to_f == 2.1
-  gem 'listen', '<= 3.0.7',                                         :require => false if RUBY_VERSION.to_f == 2.0
-  gem 'listen', '<= 3.0.7',                                         :require => false if RUBY_VERSION.to_f == 1.9
-  gem 'listen', '<= 2.7.1',                                         :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'json_pure', '<= 1.8.3',                                      :require => false if RUBY_VERSION.to_f <= 1.9
-  gem 'net-http-persistent', '<= 2.9.4',                            :require => false if RUBY_VERSION.to_f  < 2.1
-  gem 'term-ansicolor', '<= 1.3.2',                                 :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'public_suffix', '<= 1.4.6',                                  :require => false if RUBY_VERSION.to_f == 1.9
-  gem 'public_suffix', '<= 1.3.3',                                  :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'faraday', '<= 0.9.2',                                        :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'semantic_puppet', '<= 0.1.3',                                :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'semantic_puppet', '>= 1.0.0',                                :require => false if RUBY_VERSION.to_f >= 1.9
-  gem 'puppetlabs_spec_helper',                                     :require => false if RUBY_VERSION.to_f >= 1.9
-  gem 'puppetlabs_spec_helper', '<= 1.2.2',                         :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'parallel_tests', '>= 2.14.1',                                :require => false if RUBY_VERSION.to_f >= 2.0
-  gem 'parallel_tests', '2.9.0',                                    :require => false if RUBY_VERSION.to_f == 1.9
-  gem 'parallel_tests', '1.0.9',                                    :require => false if RUBY_VERSION.to_f == 1.8
-  gem 'parallel', '1.3.3.1',                                        :require => false if RUBY_VERSION.to_f <= 1.8
-  gem 'jwt',                                                        :require => false if RUBY_VERSION.to_f > 1.9
-  gem 'jwt', '1.5.6',                                               :require => false if RUBY_VERSION.to_f <= 1.9
-  gem 'google-api-client', '0.9.4',                                 :require => false if RUBY_VERSION.to_f <= 1.9
-  gem 'net-ssh', '2.9.4',                                           :require => false if RUBY_VERSION.to_f <= 1.9
-  gem 'beaker', '2.52.0',                                           :require => false if RUBY_VERSION.to_f <= 2.2
+  gem 'simplecov-console',                                          :require => false
+  gem 'metadata-json-lint',                                         :require => false
+  gem 'rake',                                                       :require => false
+  gem 'rspec',                                                      :require => false
+  gem 'rspec_junit_formatter',                                      :require => false
+  gem 'syck',                                                       :require => false
+  gem 'rubocop',                                                    :require => false
+  gem 'rubocop-rspec',                                              :require => false
+  gem 'semantic_puppet',                                            :require => false
+  gem 'puppetlabs_spec_helper',                                     :require => false
+  gem 'parallel_tests',                                             :require => false
+  gem 'parallel',                                                   :require => false
+  gem 'ruby-augeas',                                                :require => false
 end
 
 group :system_tests do
   if beaker_version = ENV['BEAKER_VERSION']
     gem 'beaker', *location_for(beaker_version)
+  else
+    gem 'beaker', :require => false
   end
   if beaker_rspec_version = ENV['BEAKER_RSPEC_VERSION']
     gem 'beaker-rspec', *location_for(beaker_rspec_version)
   else
-    gem 'beaker-rspec',  :require => false
+    gem 'beaker-rspec',                  :require => false
   end
-  gem 'serverspec',                    :require => false
+  gem 'beaker-puppet', :require => false
+  gem 'beaker-librarian', :require => false
   gem 'beaker-puppet_install_helper',  :require => false
+  gem 'beaker-vagrant', :require => false
+  gem 'beaker-module_install_helper',  :require => false
+  gem 'beaker-i18n_helper',  :require => false
+  gem 'beaker-task_helper',  :require => false
+  gem 'beaker-testmode_switcher',  :require => false
+end
+
+group :development do
+  gem 'travis-lint',        :require => false
+  gem 'travis',             :require => false
+  gem 'puppet-blacksmith',  :require => false
+  gem 'guard-rake',         :require => false
 end
 
 
@@ -96,7 +81,7 @@ end
 if puppetversion = ENV['PUPPET_GEM_VERSION']
   gem 'puppet', puppetversion, :require => false
 else
-  gem 'puppet', '~> 3.8', :require => false
+  gem 'puppet', '~> 5.5', :require => false
 end
 
 # vim:ft=ruby
